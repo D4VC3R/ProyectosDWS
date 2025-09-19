@@ -1,0 +1,20 @@
+{
+    "name": "davcerval/proyecto1",
+    "description": "Un proyecto de ejemplo de DWES",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Davcerval\\Proyecto1\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "David Cerdán"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "ramsey/uuid": "^4.9",
+        "nesbot/carbon": "^3.10"
+    }
+}

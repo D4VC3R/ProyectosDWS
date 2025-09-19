@@ -7,7 +7,7 @@
     <h1>Ejercicios de DWES</h1>
 
     <ol>
-        <li><a href="/ejercicios/bucle.php">Creación de un bucle en php</li>    
+        <li><a href="./ejercicios/bucle.php">Creación de un bucle en php</li>
     </ol>
 </body>
 

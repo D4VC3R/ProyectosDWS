@@ -1,0 +1,15 @@
+<?php
+const DIRECTORIO_TEMPLATE = "views/template/";
+
+const DIRECTORIO_VISTAS = "./views/";
+const DIRECTORIO_VISTAS_ADMIN = "./admin/views/";
+const DIRECTORIO_TEMPLATE_ADMIN = "./admin/views/template/";
+
+const DIRECTORIO_JS_ADMIN = DIRECTORIO_TEMPLATE_ADMIN."dist/js/";
+const DIRECTORIO_CSS_ADMIN = DIRECTORIO_TEMPLATE_ADMIN."dist/css/";
+const DIRECTORIO_IMG_ADMIN = DIRECTORIO_TEMPLATE_ADMIN."img/";
+
+
+const DIRECTORIO_CSS = DIRECTORIO_TEMPLATE."css/";
+const DIRECTORIO_IMG = DIRECTORIO_TEMPLATE."img/";
+

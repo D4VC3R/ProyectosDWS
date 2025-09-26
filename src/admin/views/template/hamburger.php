@@ -28,7 +28,7 @@
                 <svg class="bi me-2 opacity-50" aria-hidden="true">
                     <use href="#sun-fill"></use>
                 </svg>
-                Light
+                Claro
                 <svg class="bi ms-auto d-none" aria-hidden="true">
                     <use href="#check2"></use>
                 </svg>
@@ -44,7 +44,7 @@
                 <svg class="bi me-2 opacity-50" aria-hidden="true">
                     <use href="#moon-stars-fill"></use>
                 </svg>
-                Dark
+                Oscuro
                 <svg class="bi ms-auto d-none" aria-hidden="true">
                     <use href="#check2"></use>
                 </svg>

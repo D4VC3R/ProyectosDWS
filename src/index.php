@@ -16,6 +16,9 @@ $router->get('/', function(){
 $router->get('/control', function(){
     include_once DIRECTORIO_VISTAS_ADMIN."welcome.php";
 });
+$router->get('/loginAdmin', function(){
+    include_once DIRECTORIO_VISTAS_ADMIN."login.php";
+});
 
 $router->get('/login', function(){
     include_once DIRECTORIO_VISTAS."indice.php";
@@ -24,6 +27,7 @@ $router->get('/login', function(){
 $router->get('/cuenta', function(){
     include_once DIRECTORIO_VISTAS."generate-password.php";
 });
+
 
 
 

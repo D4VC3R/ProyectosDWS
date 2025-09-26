@@ -16,9 +16,11 @@
     />
     <script src="<?= DIRECTORIO_JS_ADMIN ?>color-modes.js"></script>
     <script src="<?= DIRECTORIO_JS_ADMIN ?>bootstrap.bundle.min.js"></script>
+    <script src="<?= DIRECTORIO_JS_ADMIN ?>dashboard"></script>
     <link href="<?= DIRECTORIO_CSS_ADMIN ?>bootstrap.min.css" rel="stylesheet">
     <link href="<?= DIRECTORIO_CSS_ADMIN ?>head.css" rel="stylesheet">
     <link href="<?= DIRECTORIO_CSS_ADMIN ?>dashboard.css" rel="stylesheet">
+    <link href="<?= DIRECTORIO_CSS_ADMIN ?>sign-in.css" rel="stylesheet">
 
     <meta name="theme-color" content="#712cf9">
 

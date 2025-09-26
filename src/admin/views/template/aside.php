@@ -40,7 +40,7 @@
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#file-earmark"></use>
                         </svg>
-                        Orders
+                        Categorias
                     </a>
                 </li>
                 <li class="nav-item">
@@ -56,7 +56,7 @@
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#people"></use>
                         </svg>
-                        Customers
+                        Usuarios
                     </a>
                 </li>
                 <li class="nav-item">
@@ -64,7 +64,7 @@
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#graph-up"></use>
                         </svg>
-                        Reports
+                        Informes
                     </a>
                 </li>
                 <li class="nav-item">
@@ -131,7 +131,7 @@
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#gear-wide-connected"></use>
                         </svg>
-                        Settings
+                        Opciones
                     </a>
                 </li>
                 <li class="nav-item">
@@ -139,7 +139,7 @@
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#door-closed"></use>
                         </svg>
-                        Sign out
+                        Cerrar sesión
                     </a>
                 </li>
             </ul>

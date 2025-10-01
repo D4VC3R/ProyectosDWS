@@ -3,7 +3,6 @@
 function generatePassword(int $longitud, bool $numeros, bool $letras, bool $signos) : string{
     $caracteres = "";
 
-
     if ($numeros) {
         $caracteres .= '0123456789';
     }
@@ -20,14 +19,14 @@ function generatePassword(int $longitud, bool $numeros, bool $letras, bool $sign
         return 'Debe seleccionar al menos un tipo de carácter (números, letras o signos).';
     }
 
-    $contraseña = '';
+    $contrasena = '';
     $longitudCaracteres = strlen($caracteres);
 
 
     for ($i = 0; $i < $longitud; $i++) {
         $indice = rand(0, $longitudCaracteres - 1);
-        $contraseña .= $caracteres[$indice];
+        $contrasena .= $caracteres[$indice];
     }
 
-    return $contraseña;
+    return $contrasena;
 }

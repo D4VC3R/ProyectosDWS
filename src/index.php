@@ -9,7 +9,6 @@ use Phroute\Phroute\RouteCollector;
 $router = new RouteCollector();
 
 // Definición de rutas
-
 $router->get('/', function(){
     return 'Estoy en la pagina principal';
 });
@@ -30,14 +29,17 @@ $router->get('/cuenta', function(){
 });
 
 $router->get('/pass', function(){
-    echo "Se va a generar una contraseña.";
-    include_once ('./src/auxiliar/funciones.php');
+    echo "Generar contraseña </br>";
+    var_dump($_GET);
 
-    echo "Tu contraseña es: " . generatePassword(10);
+    include_once './auxiliar/funciones.php';
+
+    if (!isset($_GET["longitud"]) || !is_numeric($_GET["longitud"]) || $_GET["longitud"] < 1) {
+        echo "La longitud debe ser un número positivo mayor que cero.";
+    } else {
+        echo "Tu contraseña es: " . generatePassword($_GET["longitud"], true, true, true);
+    }
 });
-
-
-
 
 // Resolver la ruta que debemos cargar
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());

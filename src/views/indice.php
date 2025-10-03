@@ -25,7 +25,10 @@
 <!-- -------------------------HEADER ----------------------------------- -->
 <div class="header"> <!-- Creamos la cabecera en donde van los primeros botones y el mensaje de bienvenida -->
     <nav>
-        <img src="<?=DIRECTORIO_IMG?>logo.png" alt="NetflixLogo" class="logo">
+        <a href = "/control">
+            <img src="<?=DIRECTORIO_IMG?>logo.png" alt="NetflixLogo" class="logo">
+        </a>
+        
         <div>
             <button class="idioma">Español<img src="<?=DIRECTORIO_IMG?>down-icon.png"></button>
             <a href="cuenta.php">

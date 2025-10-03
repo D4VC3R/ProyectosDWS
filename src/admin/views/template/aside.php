@@ -27,7 +27,7 @@
                     <a
                         class="nav-link d-flex align-items-center gap-2 active"
                         aria-current="page"
-                        href="#"
+                        href="/control"
                     >
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#house-fill"></use>
@@ -44,11 +44,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2" href="/pass">
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#cart"></use>
                         </svg>
-                        Products
+                        Contraseñas
                     </a>
                 </li>
                 <li class="nav-item">
@@ -68,11 +68,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2" href="/login">
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#puzzle"></use>
                         </svg>
-                        Integrations
+                        Netflix
                     </a>
                 </li>
             </ul>
@@ -135,7 +135,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="<?=DIRECTORIO_VISTAS_ADMIN?>login.php">
+                    <a class="nav-link d-flex align-items-center gap-2" href='/loginAdmin'>
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#door-closed"></use>
                         </svg>

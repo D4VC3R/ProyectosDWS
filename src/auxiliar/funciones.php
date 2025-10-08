@@ -29,4 +29,13 @@ function generatePassword(int $longitud, bool $numeros, bool $letras, bool $sign
     }
 
     return $contrasena;
-}
+};
+
+function calculos ($x, $y) {
+    return [
+        "suma" => $x + $y,
+        "resta" => $x - $y,
+        "multiplicacion" => $x * $y,
+        "division" => $y != 0 ? $x / $y : 'Error: División por cero'
+    ];
+};

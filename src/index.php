@@ -28,6 +28,16 @@ $router->get('/cuenta', function(){
     include_once DIRECTORIO_VISTAS."generate-password.php";
 });
 
+$router->get('/control/addPelicula', function(){
+    include_once DIRECTORIO_VISTAS_ADMIN."addPelicula.php";
+
+});
+
+$router->post('/pelicula', function ()
+{
+    var_dump($_POST);
+});
+
 $router->get('/pass', function(){
     echo "Generar contraseña </br>";
     var_dump($_GET);
@@ -38,6 +48,21 @@ $router->get('/pass', function(){
         echo "La longitud debe ser un número positivo mayor que cero.";
     } else {
         echo "Tu contraseña es: " . generatePassword($_GET["longitud"], true, true, true);
+    }
+});
+
+$router->get('/calculadora', function(){
+    include_once './auxiliar/funciones.php';
+
+    if (!isset($_GET["x"]) || !is_numeric($_GET["x"]) || !isset($_GET["y"]) || !is_numeric($_GET["y"])) {
+        echo "Los parámetros x e y deben ser números válidos.";
+    } else {
+        $resultados = calculos($_GET["x"], $_GET["y"]);
+        echo "Resultados:</br>";
+        echo "Suma: " . $resultados["suma"] . "</br>";
+        echo "Resta: " . $resultados["resta"] . "</br>";
+        echo "Multiplicación: " . $resultados["multiplicacion"] . "</br>";
+        echo "División: " . $resultados["division"] . "</br>";
     }
 });
 

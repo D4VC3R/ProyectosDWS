@@ -1,4 +1,5 @@
 <?php
+$tituloSeccion = "Dashboard";
 $titulo = "Panel de administración";
 include_once(DIRECTORIO_TEMPLATE_ADMIN."head.php");
 include_once(DIRECTORIO_TEMPLATE_ADMIN."header.php");

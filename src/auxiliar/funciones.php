@@ -1,19 +1,17 @@
 <?php
 
-function generatePassword(int $longitud, bool $numeros, bool $letras, bool $signos) : string{
+function generarPassword(int $longitud, bool $numeros, bool $letras, bool $signos) : string{
+    $numeros = filter_var($numeros, FILTER_VALIDATE_BOOLEAN);
+    $letras = filter_var($letras, FILTER_VALIDATE_BOOLEAN);
+    $signos = filter_var($signos, FILTER_VALIDATE_BOOLEAN);
+
     $caracteres = "";
 
-    if ($numeros) {
-        $caracteres .= '0123456789';
-    }
+    if ($numeros) $caracteres .= '0123456789';
 
-    if ($letras) {
-        $caracteres .= 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    }
+    if ($letras) $caracteres .= 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    if ($signos) {
-        $caracteres .= '!@#$%^&*()-_=+[]{}|;:,.<>?/~';
-    }
+    if ($signos) $caracteres .= '!@#$%^&*()-_=+[]{}|;:,.<>?/~';
 
     if ($caracteres === '') {
         return 'Debe seleccionar al menos un tipo de carácter (números, letras o signos).';

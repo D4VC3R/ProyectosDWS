@@ -44,8 +44,8 @@ $router->get('/movie',[MovieController::class,'index']);
 $router->get('/movie/{id}',[MovieController::class,'show']);
 $router->get('/create-movie',[MovieController::class,'create']);
 $router->post('/movie',[MovieController::class,'store']);
-$router->put('/movie',[MovieController::class,'update']);
-$router->delete('/movie',[MovieController::class,'destroy']);
+$router->put('/movie/{id}',[MovieController::class,'update']);
+$router->delete('/movie/{id}',[MovieController::class,'destroy']);
 
 // Resolver la ruta que debemos cargar
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());

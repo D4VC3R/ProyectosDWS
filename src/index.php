@@ -3,11 +3,49 @@ include_once ('./vendor/autoload.php');
 include_once ('./env.php');
 include_once './auxiliar/funciones.php';
 // Directiva para insertar o utilizar el router
+use App\Controller\DirectorController;
+use App\Controller\MovieController;
+use App\Controller\UserController;
 use Phroute\Phroute\Exception\HttpRouteNotFoundException;
 use Phroute\Phroute\RouteCollector;
 
 // Instancia del objeto router
 $router = new RouteCollector();
+
+// Rutas de Director CRUD
+// index es por el framework futuro, lo que hace es obtener todos los directores
+$router->get('/director', [DirectorController::class, 'index']);
+// mostrar un único director
+$router->get('/director/{id}', [DirectorController::class, 'show']);
+// Crear un director
+$router->post('/director', [DirectorController::class, 'store']);
+// Modificar un director
+$router->post('/director/{id}', [DirectorController::class, 'update']);
+// Borrar un director
+$router->delete('/director/{id}', [DirectorController::class, 'destroy']);
+
+
+//Rutas de Usuario CRUD
+//Rutas de Servicio API REST
+$router->get('/user',[UserController::class,'index']);
+$router->get('/user/{id}',[UserController::class,'show']);
+$router->post('/user',[UserController::class,'store']);
+$router->put('/user/{id}',[UserController::class,'update']);
+$router->delete('/user/{id}',[UserController::class,'destroy']);
+
+//Rutas de Peliculas CRUD
+//Rutas de Servicio API REST
+$router->get('/movie',[MovieController::class,'index']);
+$router->get('/movie/{id}',[MovieController::class,'show']);
+$router->get('/create-movie',[MovieController::class,'create']);
+$router->post('/movie',[MovieController::class,'store']);
+$router->put('/movie',[MovieController::class,'update']);
+$router->delete('/movie',[MovieController::class,'destroy']);
+
+
+
+
+
 
 // Definición de rutas
 $router->get('/', function(){

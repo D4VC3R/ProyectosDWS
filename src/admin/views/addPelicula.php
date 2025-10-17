@@ -8,7 +8,7 @@ include_once (DIRECTORIO_TEMPLATE_ADMIN."main.php");
 include_once(DIRECTORIO_TEMPLATE_ADMIN."hamburger.php");
 ?>
 
-    <form action="/pelicula" method="post" enctype="multipart/form-data">
+    <form action="/movie" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="FormControlInputTitulo" class="form-label">Titulo</label>
             <input type="text" class="form-control" name="titulo" id="FormControlInputTitulo" placeholder="Introduce el título">

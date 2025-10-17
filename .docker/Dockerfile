@@ -38,8 +38,15 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
       && apt-get clean
 
 WORKDIR /var/www/html
+# en casa sería davcer y userUIDyGID 1000 - 1000
+ARG USERNAME=ciclost
+ARG USER_UID=1002
+ARG USER_GID=1002
 
-RUN useradd ciclost && usermod -aG sudo ciclost
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
 
 #Instalación de Composer (Gestor de librerías PHP)
 COPY --from=composer:2.8.11 /usr/bin/composer /usr/local/bin/composer

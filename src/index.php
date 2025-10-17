@@ -12,6 +12,11 @@ use Phroute\Phroute\RouteCollector;
 // Instancia del objeto router
 $router = new RouteCollector();
 
+// Rutas de la aplicación
+$router->get('/', function(){
+    return 'Estoy en la pagina principal';
+});
+
 // Rutas de Director CRUD
 // index es por el framework futuro, lo que hace es obtener todos los directores
 $router->get('/director', [DirectorController::class, 'index']);
@@ -42,16 +47,25 @@ $router->post('/movie',[MovieController::class,'store']);
 $router->put('/movie',[MovieController::class,'update']);
 $router->delete('/movie',[MovieController::class,'destroy']);
 
+// Resolver la ruta que debemos cargar
+$dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
+
+try {
+    $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    echo $response;
+} catch (HttpRouteNotFoundException $e){
+    echo "Error 404, página no encontrada";
+};
+
 
 
 
 
 
 // Definición de rutas
-$router->get('/', function(){
-    return 'Estoy en la pagina principal';
-});
 
+
+/*
 $router->get('/control', function(){
     include_once DIRECTORIO_VISTAS_ADMIN."welcome.php";
 });
@@ -101,16 +115,8 @@ $router->get('/calculadora', function(){
         echo "Multiplicación: " . $resultados["multiplicacion"] . "</br>";
         echo "División: " . $resultados["division"] . "</br>";
     }
-});
+});*/
 
-// Resolver la ruta que debemos cargar
-$dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
-try {
-    $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-    echo $response;
-} catch (HttpRouteNotFoundException $e){
-    echo "Error 404, página no encontrada";
-};
 
 

@@ -3,9 +3,11 @@
 namespace App\Class;
 
 use App\Enum\TipoUsuario;
+use Ramsey\Uuid\UuidInterface;
 
-class User
+class User implements \JsonSerializable
 {
+    private UuidInterface $uuid;
     private string $username;
     private string $password;
     private string $email;
@@ -13,12 +15,29 @@ class User
     private array $votaciones;
     private TipoUsuario $tipo;
 
-    public function __construct(string $username, string $password, string $email, int $edad){
+
+
+
+    public function __construct(UuidInterface $uuid, string $username, string $password, string $email,
+    TipoUsuario $tipo=TipoUsuario::NORMAL, int $edad=0){
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
-        $this->edad = $edad;
         $this->votaciones = [];
+        $this->uuid = $uuid;
+        $this->tipo = $tipo;
+        $this->edad = $edad;
+    }
+
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(UuidInterface $uuid): User
+    {
+        $this->uuid = $uuid;
+        return $this;
     }
 
     public function getUsername(): string
@@ -85,6 +104,18 @@ class User
     {
         $this->tipo = $tipo;
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'username' => $this->username,
+            'password' => $this->password,
+            'email' => $this->email,
+            'edad' => $this->edad??"Sin datos",
+            'votaciones' => $this->votaciones,
+            'tipo' => $this->tipo->name
+        ];
     }
 }
 

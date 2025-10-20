@@ -2,13 +2,22 @@
 
 namespace App\Controller;
 
+use App\Class\User;
 use App\Interface\ControllerInterface;
+use App\Model\UserModel;
+use Ramsey\Uuid\Uuid;
+use Respect\Validation\Validator as v;
 
 class UserController implements ControllerInterface
 {
     function index()
     {
-        return "Hola";
+        $usuarios = UserModel::getAllUsers();
+
+        foreach ($usuarios as $usuario) {
+            echo json_encode($usuario);
+        }
+
     }
 
     function show($id)

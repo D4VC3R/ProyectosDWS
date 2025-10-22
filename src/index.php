@@ -31,12 +31,26 @@ $router->delete('/director/{id}', [DirectorController::class, 'destroy']);
 
 
 //Rutas de Usuario CRUD
-//Rutas de Servicio API REST
+//Rutas asociadas a la vistas de usuarios
+$router->get('/user/{id}/edit', [UserController::class, 'edit']);
+$router->get('/user/create', [UserController::class, 'create']);
+
+//Rutas para la aplicación web visual
 $router->get('/user',[UserController::class,'index']);
 $router->get('/user/{id}',[UserController::class,'show']);
 $router->post('/user',[UserController::class,'store']);
 $router->put('/user/{id}',[UserController::class,'update']);
 $router->delete('/user/{id}',[UserController::class,'destroy']);
+
+//Rutas de Servvicio API REST
+$router->get('/api/user',[UserController::class,'index']);
+$router->get('/api/user/{id}',[UserController::class,'show']);
+$router->post('/api/user',[UserController::class,'store']);
+$router->put('/api/user/{id}',[UserController::class,'update']);
+$router->delete('/api/user/{id}',[UserController::class,'destroy']);
+
+
+
 
 //Rutas de Peliculas CRUD
 //Rutas de Servicio API REST
@@ -46,6 +60,25 @@ $router->get('/create-movie',[MovieController::class,'create']);
 $router->post('/movie',[MovieController::class,'store']);
 $router->put('/movie/{id}',[MovieController::class,'update']);
 $router->delete('/movie/{id}',[MovieController::class,'destroy']);
+
+$router->get('/control', function(){
+    include_once DIRECTORIO_VISTAS_ADMIN."welcome.php";
+});
+$router->get('/loginAdmin', function(){
+    include_once DIRECTORIO_VISTAS_ADMIN."login.php";
+});
+
+$router->get('/login', function(){
+    include_once DIRECTORIO_VISTAS."indice.php";
+});
+
+$router->get('/cuenta', function(){
+    include_once DIRECTORIO_VISTAS."generate-password.php";
+});
+
+$router->get('/control/addPelicula', function(){
+    include_once DIRECTORIO_VISTAS_ADMIN . "addPelicula.php";
+});
 
 // Resolver la ruta que debemos cargar
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
@@ -65,25 +98,8 @@ try {
 // Definición de rutas
 
 
-/*
-$router->get('/control', function(){
-    include_once DIRECTORIO_VISTAS_ADMIN."welcome.php";
-});
-$router->get('/loginAdmin', function(){
-    include_once DIRECTORIO_VISTAS_ADMIN."login.php";
-});
 
-$router->get('/login', function(){
-    include_once DIRECTORIO_VISTAS."indice.php";
-});
 
-$router->get('/cuenta', function(){
-    include_once DIRECTORIO_VISTAS."generate-password.php";
-});
-
-$router->get('/control/addPelicula', function(){
-    include_once DIRECTORIO_VISTAS_ADMIN."addPelicula.php";
-});
 
 
 $router->post('/pelicula', function ()
@@ -91,7 +107,7 @@ $router->post('/pelicula', function ()
     var_dump($_POST);
     var_dump($_FILES);
 });
-
+/*
 $router->get('/pass', function(){
     echo "Generar contraseña </br>";
     var_dump($_GET);

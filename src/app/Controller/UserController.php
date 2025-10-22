@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Class\User;
 use App\Interface\ControllerInterface;
 use App\Model\UserModel;
-use Ramsey\Uuid\Uuid;
+use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Validator as v;
 
 class UserController implements ControllerInterface
@@ -14,9 +14,7 @@ class UserController implements ControllerInterface
     {
         $usuarios = UserModel::getAllUsers();
 
-        foreach ($usuarios as $usuario) {
-            echo json_encode($usuario);
-        }
+        include_once DIRECTORIO_VISTAS_ADMIN."allusers.php";
 
     }
 
@@ -27,12 +25,18 @@ class UserController implements ControllerInterface
 
     function store()
     {
-        var_dump($_POST);
+        var_dump(User::validateUserCreation($_POST));
     }
 
     function update($id)
     {
+        echo $id;
 
+        parse_str(file_get_contents("php://input"),$editData);
+        $editData["uuid"] = $id;
+        $usuario = User::validateUserEdit($editData);
+        var_dump($editData);
+        var_dump($usuario);
     }
 
     function destroy($id)

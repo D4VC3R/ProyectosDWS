@@ -2,8 +2,11 @@
 
 namespace App\Class;
 
-use App\Enum\TipoUsuario;
+use App\Enum\UserType;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Respect\Validation\Exceptions\NestedValidationException;
+use Respect\Validation\Validator as v;
 
 class User implements \JsonSerializable
 {
@@ -13,13 +16,13 @@ class User implements \JsonSerializable
     private string $email;
     private int $edad;
     private array $votaciones;
-    private TipoUsuario $tipo;
+    private UserType $tipo;
 
 
 
 
     public function __construct(UuidInterface $uuid, string $username, string $password, string $email,
-    TipoUsuario $tipo=TipoUsuario::NORMAL, int $edad=0){
+                                UserType      $tipo=UserType::NORMAL, int $edad=0){
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
@@ -95,12 +98,12 @@ class User implements \JsonSerializable
         return $this;
     }
 
-    public function getTipo(): TipoUsuario
+    public function getTipo(): UserType
     {
         return $this->tipo;
     }
 
-    public function setTipo(TipoUsuario $tipo): User
+    public function setTipo(UserType $tipo): User
     {
         $this->tipo = $tipo;
         return $this;
@@ -116,6 +119,54 @@ class User implements \JsonSerializable
             'votaciones' => $this->votaciones,
             'tipo' => $this->tipo->name
         ];
+    }
+    public static function validateUserCreation(array $userData):User|array{
+
+        try {
+            v::key('username', v::stringType())
+                ->key('password', v::stringType()->length(3, 16))
+                ->key('email', v::email())
+                ->key('edad', v::intVal()->min(18))
+                ->key('type', v::in(["normal", "anuncios", "admin"])
+                )->assert($userData);
+        }catch(NestedValidationException $errores){
+
+            return $errores->getMessages();
+        }
+
+        $usuario = new User(
+            Uuid::uuid4(),
+            $userData['username'],
+            $userData['password'],
+            $userData['email']);
+
+        $usuario->setEdad($userData['edad']);
+        $usuario->setTipo(UserType::stringToUserType($userData['type']));
+
+        return $usuario;
+    }
+
+    public static function validateUserEdit(array $userData):User|array{
+        try {
+            v::key('uuid', v::uuid())
+                ->optional(v::key('username', v::stringType()))
+                ->optional(v::key('password', v::stringType()->length(3, 16)))
+                ->optional(v::key('email', v::email()))
+                ->optional(v::key('edad', v::intVal()->min(18)))
+                ->optional(v::key('type',v::in(["normal", "anuncios", "admin"]))
+                )->assert($userData);
+        }catch(NestedValidationException $errores){
+            return $errores->getMessages();
+        }
+        // TODO buscar el usuario en la base de datos y modificarlo.
+        return new User(
+            Uuid::fromString($userData['uuid']),
+            $userData['username'],
+            $userData['password'],
+            $userData['email'],
+            UserType::stringToUserType($userData['type']
+            )
+        );
     }
 }
 

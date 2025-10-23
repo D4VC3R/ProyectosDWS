@@ -1,4 +1,4 @@
-<html>
+<html lang="es">
 <head>
     <title>Índice de ejercicios </title>
 </head>

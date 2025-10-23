@@ -14,7 +14,7 @@ class UserController implements ControllerInterface
     {
         $usuarios = UserModel::getAllUsers();
 
-        include_once DIRECTORIO_VISTAS_APP."allusers.php";
+        include_once DIRECTORIO_VISTAS_BACKEND."User/allusers.php";
 
     }
 

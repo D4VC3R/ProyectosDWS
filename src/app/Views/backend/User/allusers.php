@@ -14,7 +14,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND."hamburger.php");
         foreach($usuarios as $usuario){
             ?>
             <div class="card" style="width: 18rem;">
-                <img src="<?=DIRECTORIO_IMG_BACKEND?>user.png" class="card-img-top" alt="...">
+                <img src="<?=DIRECTORIO_IMG_BACKEND?>user.png" class="card-img-top" alt="user">
                 <div class="card-body">
                     <h5 class="card-title"><?=$usuario->getUsername()?></h5>
                     <p class="card-text"><?=$usuario->getEmail()?></p>

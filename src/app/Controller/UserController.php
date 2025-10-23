@@ -46,7 +46,7 @@ class UserController implements ControllerInterface
 
     function create()
     {
-        include_once DIRECTORIO_VISTAS_BACKEND."registerUser.php";
+        include_once DIRECTORIO_VISTAS_BACKEND."createUser.php";
     }
 
     function edit($id)

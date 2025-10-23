@@ -1,11 +1,11 @@
 <?php
 $tituloSeccion = "Añadir Película";
 $titulo = "Añadir Película";
-include_once(DIRECTORIO_TEMPLATE_ADMIN."head.php");
-include_once(DIRECTORIO_TEMPLATE_ADMIN."header.php");
-include_once (DIRECTORIO_TEMPLATE_ADMIN."aside.php");
-include_once (DIRECTORIO_TEMPLATE_ADMIN."main.php");
-include_once(DIRECTORIO_TEMPLATE_ADMIN."hamburger.php");
+include_once(DIRECTORIO_TEMPLATE_BACKEND."head.php");
+include_once(DIRECTORIO_TEMPLATE_BACKEND."header.php");
+include_once (DIRECTORIO_TEMPLATE_BACKEND."aside.php");
+include_once (DIRECTORIO_TEMPLATE_BACKEND."main.php");
+include_once(DIRECTORIO_TEMPLATE_BACKEND."hamburger.php");
 ?>
 
     <form action="/movie" method="post" enctype="multipart/form-data">
@@ -75,4 +75,4 @@ include_once(DIRECTORIO_TEMPLATE_ADMIN."hamburger.php");
 
 
 <?php
-include_once(DIRECTORIO_TEMPLATE_ADMIN."footer.php");
+include_once(DIRECTORIO_TEMPLATE_BACKEND."footer.php");

@@ -46,7 +46,7 @@ class UserController implements ControllerInterface
 
     function create()
     {
-
+        include_once DIRECTORIO_VISTAS_BACKEND."registerUser.php";
     }
 
     function edit($id)
@@ -60,5 +60,9 @@ class UserController implements ControllerInterface
 
     function verify(){
         var_dump($_POST);
+    }
+
+    function show_register(){
+
     }
 }

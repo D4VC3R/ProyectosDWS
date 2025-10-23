@@ -34,7 +34,7 @@ class MovieController implements ControllerInterface
 
     function create()
     {
-    include_once DIRECTORIO_VISTAS_ADMIN."addPelicula.php";
+    include_once DIRECTORIO_VISTAS_APP."addPelicula.php";
     }
 
     function edit($id)

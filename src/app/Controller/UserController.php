@@ -14,7 +14,7 @@ class UserController implements ControllerInterface
     {
         $usuarios = UserModel::getAllUsers();
 
-        include_once DIRECTORIO_VISTAS_ADMIN."allusers.php";
+        include_once DIRECTORIO_VISTAS_APP."allusers.php";
 
     }
 
@@ -52,5 +52,13 @@ class UserController implements ControllerInterface
     function edit($id)
     {
 
+    }
+
+    function show_login(){
+        include_once DIRECTORIO_VISTAS_FRONTEND."login.php";
+    }
+
+    function verify(){
+        var_dump($_POST);
     }
 }

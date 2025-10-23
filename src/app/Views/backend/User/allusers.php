@@ -12,7 +12,7 @@ include_once("template/main.php");
         foreach($usuarios as $usuario){
             ?>
             <div class="card" style="width: 18rem;">
-                <img src=<?=DIRECTORIO_VISTAS_ADMIN."user.png"?> class="card-img-top" alt="...">
+                <img src=<?=DIRECTORIO_VISTAS_APP."user.png"?> class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><?=$usuario->getUsername()?></h5>
                     <p class="card-text"><?=$usuario->getEmail()?></p>

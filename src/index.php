@@ -2,6 +2,8 @@
 include_once ('./vendor/autoload.php');
 include_once ('./env.php');
 include_once './auxiliar/funciones.php';
+
+session_start();
 // Directiva para insertar o utilizar el router
 use App\Controller\DirectorController;
 use App\Controller\MovieController;
@@ -34,6 +36,8 @@ $router->delete('/director/{id}', [DirectorController::class, 'destroy']);
 //Rutas asociadas a la vistas de usuarios
 $router->get('/user/{id}/edit', [UserController::class, 'edit']);
 $router->get('/user/create', [UserController::class, 'create']);
+$router->get('/login',[UserController::class,'show_login']);
+$router->post('/user/login',[UserController::class,'verify']);
 
 //Rutas para la aplicación web visual
 $router->get('/user',[UserController::class,'index']);
@@ -62,22 +66,22 @@ $router->put('/movie/{id}',[MovieController::class,'update']);
 $router->delete('/movie/{id}',[MovieController::class,'destroy']);
 
 $router->get('/control', function(){
-    include_once DIRECTORIO_VISTAS_ADMIN."welcome.php";
+    include_once DIRECTORIO_VISTAS_BACKEND . "welcome.php";
 });
-$router->get('/loginAdmin', function(){
-    include_once DIRECTORIO_VISTAS_ADMIN."login.php";
+/*$router->get('/loginAdmin', function(){
+    include_once DIRECTORIO_VISTAS_APP."login.php";
 });
 
 $router->get('/login', function(){
     include_once DIRECTORIO_VISTAS."indice.php";
 });
-
+*/
 $router->get('/cuenta', function(){
     include_once DIRECTORIO_VISTAS."generate-password.php";
 });
 
 $router->get('/control/addPelicula', function(){
-    include_once DIRECTORIO_VISTAS_ADMIN . "addPelicula.php";
+    include_once DIRECTORIO_VISTAS_BACKEND . "Movie/addPelicula.php";
 });
 
 // Resolver la ruta que debemos cargar

@@ -14,13 +14,13 @@
             rel="canonical"
             href="https://getbootstrap.com/docs/5.3/examples/dashboard/"
     />
-    <script src="<?= DIRECTORIO_JS_ADMIN ?>color-modes.js"></script>
-    <script src="<?= DIRECTORIO_JS_ADMIN ?>bootstrap.bundle.min.js"></script>
-    <script src="<?= DIRECTORIO_JS_ADMIN ?>dashboard"></script>
-    <link href="<?= DIRECTORIO_CSS_ADMIN ?>bootstrap.min.css" rel="stylesheet">
-    <link href="<?= DIRECTORIO_CSS_ADMIN ?>head.css" rel="stylesheet">
-    <link href="<?= DIRECTORIO_CSS_ADMIN ?>dashboard.css" rel="stylesheet">
-    <link href="<?= DIRECTORIO_CSS_ADMIN ?>sign-in.css" rel="stylesheet">
+    <script src="<?= DIRECTORIO_JS_BACKEND ?>color-modes.js"></script>
+    <script src="<?= DIRECTORIO_JS_BACKEND ?>bootstrap.bundle.min.js"></script>
+    <script src="<?= DIRECTORIO_JS_BACKEND ?>dashboard"></script>
+    <link href="<?= DIRECTORIO_CSS_BACKEND ?>bootstrap.min.css" rel="stylesheet">
+    <link href="<?= DIRECTORIO_CSS_BACKEND ?>head.css" rel="stylesheet">
+    <link href="<?= DIRECTORIO_CSS_BACKEND ?>dashboard.css" rel="stylesheet">
+    <link href="<?= DIRECTORIO_CSS_BACKEND ?>sign-in.css" rel="stylesheet">
 
     <meta name="theme-color" content="#712cf9">
 

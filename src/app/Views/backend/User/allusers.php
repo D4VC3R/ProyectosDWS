@@ -13,7 +13,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND."hamburger.php");
         <?php
         foreach($usuarios as $usuario){
             ?>
-            <div class="card" style="width: 18rem;">
+            <div class="card m-1" style="width: 18rem;">
                 <img src="<?=DIRECTORIO_IMG_BACKEND?>user.png" class="card-img-top" alt="user">
                 <div class="card-body">
                     <h5 class="card-title"><?=$usuario->getUsername()?></h5>

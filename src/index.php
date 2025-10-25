@@ -14,22 +14,12 @@ use Phroute\Phroute\RouteCollector;
 // Instancia del objeto router
 $router = new RouteCollector();
 
+
+
 // Rutas de la aplicación
 $router->get('/', function(){
     return 'Estoy en la pagina principal';
 });
-
-// Rutas de Director CRUD
-// index es por el framework futuro, lo que hace es obtener todos los directores
-$router->get('/director', [DirectorController::class, 'index']);
-// mostrar un único director
-$router->get('/director/{id}', [DirectorController::class, 'show']);
-// Crear un director
-$router->post('/director', [DirectorController::class, 'store']);
-// Modificar un director
-$router->post('/director/{id}', [DirectorController::class, 'update']);
-// Borrar un director
-$router->delete('/director/{id}', [DirectorController::class, 'destroy']);
 
 
 //Rutas de Usuario CRUD
@@ -68,6 +58,18 @@ $router->delete('/movie/{id}',[MovieController::class,'destroy']);
 $router->get('/control', function(){
     include_once DIRECTORIO_VISTAS_BACKEND . "welcome.php";
 });
+
+// Rutas de Director CRUD
+// index es por el framework futuro, lo que hace es obtener todos los directores
+$router->get('/director', [DirectorController::class, 'index']);
+// mostrar un único director
+$router->get('/director/{id}', [DirectorController::class, 'show']);
+// Crear un director
+$router->post('/director', [DirectorController::class, 'store']);
+// Modificar un director
+$router->post('/director/{id}', [DirectorController::class, 'update']);
+// Borrar un director
+$router->delete('/director/{id}', [DirectorController::class, 'destroy']);
 /*$router->get('/loginAdmin', function(){
     include_once DIRECTORIO_VISTAS_APP."login.php";
 });
@@ -77,18 +79,22 @@ $router->get('/login', function(){
 });
 */
 $router->get('/cuenta', function(){
-    include_once DIRECTORIO_VISTAS."generate-password.php";
+    include_once DIRECTORIO_VISTAS . "generate-password.php";
 });
 
 $router->get('/control/addPelicula', function(){
     include_once DIRECTORIO_VISTAS_BACKEND . "Movie/addPelicula.php";
 });
 
+$method =$_SERVER['REQUEST_METHOD'];
+if ($method === 'POST' && isset($_POST['_method']))
+    $method = strtoupper($_POST['_method']);
+
 // Resolver la ruta que debemos cargar
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
 try {
-    $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    $response = $dispatcher->dispatch($method, parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
     echo $response;
 } catch (HttpRouteNotFoundException $e){
     echo "Error 404, página no encontrada";

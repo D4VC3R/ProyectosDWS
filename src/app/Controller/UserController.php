@@ -20,7 +20,15 @@ class UserController implements ControllerInterface
 
     function show($id)
     {
-        return "Estos son los datos del usuario $id";
+        $usuario = UserModel::getUserById($id);
+
+        if ($usuario === null){
+            http_response_code(404);
+            echo "Usuario no encontrado.";
+            return;
+        }
+
+        include_once DIRECTORIO_VISTAS_BACKEND."User/showUser.php";
     }
 
     function store()
@@ -41,7 +49,8 @@ class UserController implements ControllerInterface
 
     function destroy($id)
     {
-
+        $usuario = UserModel::getUserById($id);
+        var_dump($usuario);
     }
 
     function create()
@@ -51,7 +60,14 @@ class UserController implements ControllerInterface
 
     function edit($id)
     {
+        $usuario = UserModel::getUserById($id);
 
+        if ($usuario === null) {
+            http_response_code(404);
+            echo "Usuario no encontrado.";
+            return;
+        }
+        include_once DIRECTORIO_VISTAS_BACKEND."User/editUser.php";
     }
 
     function show_login(){

@@ -22,7 +22,7 @@ class User implements \JsonSerializable
 
 
     public function __construct(UuidInterface $uuid, string $username, string $password, string $email,
-                                UserType      $tipo=UserType::NORMAL, int $edad=0){
+                                UserType $tipo=UserType::NORMAL, int $edad=18){
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;

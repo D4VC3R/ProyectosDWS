@@ -28,6 +28,7 @@ $router->get('/user/{id}/edit', [UserController::class, 'edit']);
 $router->get('/user/create', [UserController::class, 'create']);
 $router->get('/login',[UserController::class,'show_login']);
 $router->post('/user/login',[UserController::class,'verify']);
+$router->get('/logout',[UserController::class,'logout']);
 
 //Rutas para la aplicación web visual
 $router->get('/user',[UserController::class,'index']);
@@ -70,14 +71,8 @@ $router->post('/director', [DirectorController::class, 'store']);
 $router->post('/director/{id}', [DirectorController::class, 'update']);
 // Borrar un director
 $router->delete('/director/{id}', [DirectorController::class, 'destroy']);
-/*$router->get('/loginAdmin', function(){
-    include_once DIRECTORIO_VISTAS_APP."login.php";
-});
 
-$router->get('/login', function(){
-    include_once DIRECTORIO_VISTAS."indice.php";
-});
-*/
+
 $router->get('/cuenta', function(){
     include_once DIRECTORIO_VISTAS . "generate-password.php";
 });
@@ -102,13 +97,7 @@ try {
 
 
 
-
-
-
 // Definición de rutas
-
-
-
 
 
 

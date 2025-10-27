@@ -1,8 +1,8 @@
 <?php
 $titulo = "Generar Contraseña";
-include DIRECTORIO_TEMPLATE."head.php";
-include DIRECTORIO_TEMPLATE."header.php";
-include DIRECTORIO_TEMPLATE."subheader.php";
+include DIRECTORIO_TEMPLATE_FRONTEND."head.php";
+include DIRECTORIO_TEMPLATE_FRONTEND."header.php";
+include DIRECTORIO_TEMPLATE_FRONTEND."subheader.php";
 ?>
 <!--HTML personalizado para mi página-->
 <div class="texto">
@@ -10,4 +10,4 @@ include DIRECTORIO_TEMPLATE."subheader.php";
 </div>
 
 <?php
-include DIRECTORIO_TEMPLATE."footer.php";
+include DIRECTORIO_TEMPLATE_FRONTEND."footer.php";

@@ -9,7 +9,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND."hamburger.php");
 <main class="form-signin w-100 m-auto text-center">
     <form action="/user/login" method="post">
         <a href="/control">
-            <img class="mb-1" src="<?=DIRECTORIO_IMG_BACKEND?>userLogin.svg" alt="" width="150" height="97" />
+            <img class="mb-1" src="<?=DIRECTORIO_IMG_FRONTEND?>userLogin.svg" alt="" width="150" height="97" />
         </a>
         <h1 class="h3 mb-3 fw-normal">Inicia sesión</h1>
         <div class="form-floating">

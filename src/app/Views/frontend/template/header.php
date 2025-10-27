@@ -1,7 +1,7 @@
 <div class="header">
     <nav>
         <div class="centro-ayuda">
-            <img src="img/logo.png" alt="NetflixLogo" class="logo" />
+            <img src="imgs/logo.png" alt="NetflixLogo" class="logo" />
             <p>| Centro de Ayuda</p>
         </div>
         <div>

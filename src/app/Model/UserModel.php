@@ -14,6 +14,7 @@ class UserModel
             "pabloM",
             "molbap",
             "pablom@mail.com",
+            UserType::ADMIN
 
         );
         $usuario2 = new User(
@@ -21,8 +22,7 @@ class UserModel
             "pabloC",
             "colbap",
             "pabloc@mail.com",
-            UserType::ADMIN,
-            22
+            UserType::NORMAL
         );
         $usuarios = [$usuario1, $usuario2];
 

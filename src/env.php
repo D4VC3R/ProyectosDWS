@@ -8,11 +8,15 @@ const DIRECTORIO_VISTAS_BACKEND = "app/Views/backend/";
 const DIRECTORIO_VISTAS_FRONTEND = "app/Views/frontend/";
 const DIRECTORIO_TEMPLATE_BACKEND = "app/Views/backend/template/";
 
+const DIRECTORIO_TEMPLATE_FRONTEND = "app/Views/frontend/template/";
+
 // URLs absolutas para recursos
 const DIRECTORIO_JS_BACKEND = BASE_URL . DIRECTORIO_TEMPLATE_BACKEND . "dist/js/";
 const DIRECTORIO_CSS_BACKEND = BASE_URL . DIRECTORIO_TEMPLATE_BACKEND . "dist/css/";
 const DIRECTORIO_IMG_BACKEND = BASE_URL . DIRECTORIO_TEMPLATE_BACKEND . "imgs/";
 
-const DIRECTORIO_CSS = BASE_URL . "views/template/css/";
-const DIRECTORIO_IMG = BASE_URL . "views/template/img/";
+const DIRECTORIO_JS_FRONTEND = BASE_URL . DIRECTORIO_TEMPLATE_FRONTEND . "dist/js/";
+
+const DIRECTORIO_CSS_FRONTEND = BASE_URL . DIRECTORIO_TEMPLATE_FRONTEND . "dist/css/";
+const DIRECTORIO_IMG_FRONTEND = BASE_URL . DIRECTORIO_TEMPLATE_FRONTEND . "imgs/";
 

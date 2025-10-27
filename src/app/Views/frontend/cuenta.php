@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cuenta Clon</title>
-    <link rel="stylesheet" href="template/css/cuenta.css" /><!-- Aplico css externo -->
-    <link rel="shortcut icon" type="image/jpg" href="template/img/netflix-flavicon.png" />
+    <link rel="stylesheet" href="template/dist/css/cuenta.css" /><!-- Aplico css externo -->
+    <link rel="shortcut icon" type="image/jpg" href="template/imgs/netflix-flavicon.png" />
     <meta name="keywords" content="html,css,clon netflix" />
     <meta name="description"
           content="Clon del login de usuario de Netflix España hecho con HTML y CSS para la asignatura de Lenguajes de Marcas del IES Fernando Wirtz" />
@@ -26,7 +26,7 @@
 <body>
 <div class="contenido">
     <nav>
-        <img class="logo" src="template/img/logo.png" alt="netflixLogo" />
+        <img class="logo" src="template/imgs/logo.png" alt="netflixLogo" />
     </nav>
     <div class="caja">
         <h2>Iniciar sesión</h2>

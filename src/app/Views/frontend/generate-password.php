@@ -7,6 +7,7 @@ include DIRECTORIO_TEMPLATE_FRONTEND."subheader.php";
 <!--HTML personalizado para mi página-->
 <div class="texto">
     <h1>Generador de constraseñas</h1>
+    <?= generarPassword(12,true,true,true);?>
 </div>
 
 <?php

@@ -26,7 +26,7 @@
 <body>
 <div class="contenido">
     <nav>
-        <img class="logo" src="template/imgs/logo.png" alt="netflixLogo" />
+        <img class="logo" src="<?=DIRECTORIO_IMG_FRONTEND?>logo.png" alt="netflixLogo" />
     </nav>
     <div class="caja">
         <h2>Iniciar sesión</h2>
@@ -65,10 +65,10 @@
         <ul>
             <li><a href="#">Preguntas frecuentes</a></li>
             <li><a href="#">Centro de ayuda</a></li>
-            <li><a href="/terminos-de-uso.html">Términos de uso</a></li>
-            <li><a href="/privacidad.html">Privacidad</a></li>
+            <li><a href="./template/terminos-de-uso.html">Términos de uso</a></li>
+            <li><a href="./template/privacidad.html">Privacidad</a></li>
             <li><a href="#">Preferencias de cookies</a></li>
-            <li><a href="/info-corporativa.html">Información corporativa</a></li>
+            <li><a href="./template/info-corporativa.html">Información corporativa</a></li>
         </ul>
     </div>
 </footer>

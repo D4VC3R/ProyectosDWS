@@ -73,8 +73,8 @@ $router->post('/director/{id}', [DirectorController::class, 'update']);
 $router->delete('/director/{id}', [DirectorController::class, 'destroy']);
 
 
-$router->get('/cuenta', function(){
-    include_once DIRECTORIO_VISTAS . "generate-password.php";
+$router->get('/password', function(){
+    include_once DIRECTORIO_VISTAS_FRONTEND . "generate-password.php";
 });
 
 $router->get('/control/addPelicula', function(){

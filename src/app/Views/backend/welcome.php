@@ -8,7 +8,8 @@ include_once (DIRECTORIO_TEMPLATE_BACKEND."main.php");
 include_once(DIRECTORIO_TEMPLATE_BACKEND."hamburger.php");
 
 
-echo "Bienvenido al panel de administración";
+echo "Bienvenido al panel de administración, " . $_SESSION['username'] .";" ;
+
 
 
 

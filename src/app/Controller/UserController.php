@@ -21,10 +21,9 @@ class UserController implements ControllerInterface
 
     function show($id)
     {
-        if (isset($_SESSION['username'])) {
-            $usuario = UserModel::getUserById($id);
-            include_once DIRECTORIO_VISTAS_BACKEND . "User/showUser.php";
-        }
+        $usuario = UserModel::getUserById($id);
+        include_once DIRECTORIO_VISTAS_BACKEND . "User/showUser.php";
+
     }
 
     function store()
@@ -46,12 +45,13 @@ class UserController implements ControllerInterface
     function destroy($id)
     {
         $usuario = UserModel::getUserById($id);
+        echo "Se ha eliminado el usuario: " . $usuario->getUsername();
         var_dump($usuario);
     }
 
     function create()
     {
-        include_once DIRECTORIO_VISTAS_BACKEND . "createUser.php";
+        include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
     }
 
     function edit($id)
@@ -81,15 +81,16 @@ class UserController implements ControllerInterface
 
         foreach ($usuarios as $usuario) {
             if ($usuario->getUsername() === $_POST['username'] && password_verify($usuario->getPassword(), $hash)) {
+                $_SESSION['username'] = $usuario->getUsername();
+                $_SESSION['uuid'] = $usuario->getUuid();
                 if ($usuario->getTipo() === UserType::ADMIN) {
                     include_once DIRECTORIO_VISTAS_BACKEND . "welcome.php";
                 } else {
                     include_once DIRECTORIO_VISTAS_FRONTEND . "indice.php";
                 }
-            }else{
-                echo "Usuario no encontrado.";
             }
         }
+        echo "Usuario no encontrado.";
     }
 
     function logout()

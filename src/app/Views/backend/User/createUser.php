@@ -13,7 +13,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
             <img class="mb-1" src="<?= DIRECTORIO_IMG_BACKEND?>userLogin.svg" alt="" width="150" height="97"/>
         </a>
         <h1 class="h3 mb-3 fw-normal">Añadir usuario</h1>
-        <div class="form-floating">
+        <div class="form-floating mb-1">
             <input
                 type="text"
                 name="username"
@@ -24,9 +24,9 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
             />
             <label for="register_username">Nombre de Usuario</label>
         </div>
-        <div class="form-floating">
+        <div class="form-floating mb-1">
             <input
-                type="password"
+                type="password" style="margin-bottom: 0"
                 name="password"
                 class="form-control"
                 id="register_password"
@@ -35,7 +35,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
             />
             <label for="register_password">Contraseña</label>
         </div>
-        <div class="form-floating">
+        <div class="form-floating mb-1">
             <input
                 type="email"
                 name="email"
@@ -46,7 +46,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
             />
             <label for="email">Email</label>
         </div>
-        <div class="form-floating">
+        <div class="form-floating mb-1">
             <input
                 type="text"
                 name="edad"
@@ -57,7 +57,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
             />
             <label for="edad">Edad</label>
         </div>
-        <div class="form-floating">
+        <div class="form-floating mb-1">
             <select
                     name="type"
                     id="register_usertype"

@@ -27,16 +27,16 @@ function generarPassword(int $longitud, bool $numeros, bool $letras, bool $signo
     }
 
     return $contrasena;
-};
+}
 
-function calculos ($x, $y) {
+function calculos ($x, $y):array {
     return [
         "suma" => $x + $y,
         "resta" => $x - $y,
         "multiplicacion" => $x * $y,
         "division" => $y != 0 ? $x / $y : 'Error: División por cero'
     ];
-};
+}
 
 function organizarImagen(array $datosImagen,string $tituloPelicula):string|bool{
     $carpetas=scandir(__DIR__);

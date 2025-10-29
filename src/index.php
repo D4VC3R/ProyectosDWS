@@ -92,7 +92,7 @@ try {
     $response = $dispatcher->dispatch($method, parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
     echo $response;
 } catch (HttpRouteNotFoundException $e){
-    echo "Error 404, página no encontrada";
+    include_once DIRECTORIO_VISTAS_FRONTEND . "404.php";
 };
 
 

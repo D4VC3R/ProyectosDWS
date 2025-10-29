@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Página no encontrada</title>
-    <link rel="stylesheet" href="<?=DIRECTORIO_CSS_FRONTEND?>404.css" /><!-- Aplico css externo -->
+    <link rel="stylesheet" href="<?=DIRECTORIO_CSS_FRONTEND?>404.css">
 
 </head>
     <body>

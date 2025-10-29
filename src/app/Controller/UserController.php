@@ -28,7 +28,16 @@ class UserController implements ControllerInterface
 
     function store()
     {
-        var_dump(User::validateUserCreation($_POST));
+        $resultado = User::validateUserCreation($_POST);
+        !is_array($resultado)
+            ?
+            var_dump($resultado)
+            :
+            include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
+            foreach ($resultado as $error) {
+                echo $error . "<br>";
+            }
+
     }
 
     function update($id)
@@ -40,6 +49,7 @@ class UserController implements ControllerInterface
         $usuario = User::validateUserEdit($editData);
         var_dump($editData);
         var_dump($usuario);
+
     }
 
     function destroy($id)
@@ -96,6 +106,8 @@ class UserController implements ControllerInterface
     function logout()
     {
         session_destroy();
-        include_once DIRECTORIO_VISTAS_BACKEND . "login.php";
+        header("Location: /login");
+        exit;
     }
 }
+

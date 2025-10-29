@@ -6,8 +6,6 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND."header.php");
 include_once (DIRECTORIO_TEMPLATE_BACKEND."aside.php");
 include_once (DIRECTORIO_TEMPLATE_BACKEND."main.php");
 include_once(DIRECTORIO_TEMPLATE_BACKEND."hamburger.php");
-
-
 ?>
     <div class="row">
         <?php

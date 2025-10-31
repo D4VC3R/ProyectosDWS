@@ -11,103 +11,110 @@ use Respect\Validation\Validator as v;
 
 class UserController implements ControllerInterface
 {
-    function index()
-    {
-        $usuarios = UserModel::getAllUsers();
+	function index()
+	{
+		$usuarios = UserModel::getAllUsers();
 
-        include_once DIRECTORIO_VISTAS_BACKEND . "User/allusers.php";
+		include_once DIRECTORIO_VISTAS_BACKEND . "User/allusers.php";
 
-    }
+	}
 
-    function show($id)
-    {
-        $usuario = UserModel::getUserById($id);
-        include_once DIRECTORIO_VISTAS_BACKEND . "User/showUser.php";
+	function show($id)
+	{
+		$usuario = UserModel::getUserById($id);
+		include_once DIRECTORIO_VISTAS_BACKEND . "User/showUser.php";
 
-    }
+	}
 
-    function store()
-    {
-        $resultado = User::validateUserCreation($_POST);
-        !is_array($resultado)
-            ?
-            var_dump($resultado)
-            :
-            include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
-            foreach ($resultado as $error) {
-                echo $error . "<br>";
-            }
+	function store()
+	{
+		$resultado = User::validateUserCreation($_POST);
+		!is_array($resultado)
+			?
+			var_dump($resultado)
+			:
+			include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
+		foreach ($resultado as $error) {
+			echo $error . "<br>";
+		}
 
-    }
+	}
 
-    function update($id)
-    {
-        echo $id;
+	function update($id)
+	{
+		echo $id;
 
-        parse_str(file_get_contents("php://input"), $editData);
-        $editData["uuid"] = $id;
-        $usuario = User::validateUserEdit($editData);
-        var_dump($editData);
-        var_dump($usuario);
+		parse_str(file_get_contents("php://input"), $editData);
+		$editData["uuid"] = $id;
+		$usuario = User::validateUserEdit($editData);
+		var_dump($usuario);
 
-    }
+	}
 
-    function destroy($id)
-    {
-        $usuario = UserModel::getUserById($id);
-        echo "Se ha eliminado el usuario: " . $usuario->getUsername();
-        var_dump($usuario);
-    }
+	function destroy($id)
+	{
+		$usuario = UserModel::getUserById($id);
 
-    function create()
-    {
-        include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
-    }
+		if ($usuario === null) {
+			http_response_code(404);
+			echo "Usuario no encontrado.";
+			return;
+		}
 
-    function edit($id)
-    {
-        $usuario = UserModel::getUserById($id);
+		echo "Se ha eliminado el usuario: " . $usuario->getUsername();
+		var_dump($usuario);
+	}
 
-        if ($usuario === null) {
-            http_response_code(404);
-            echo "Usuario no encontrado.";
-            return;
-        }
-        include_once DIRECTORIO_VISTAS_BACKEND . "User/editUser.php";
-    }
+	function create()
+	{
+		include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
+	}
 
-    function show_login()
-    {
-        include_once DIRECTORIO_VISTAS_BACKEND . "login.php";
-    }
+	function edit($id)
+	{
+		$usuario = UserModel::getUserById($id);
 
-    function verify()
-    {
-        $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        var_dump(password_verify($_POST['password'], $hash));
-        var_dump($_POST);
+		if ($usuario === null) {
+			http_response_code(404);
+			echo "Usuario no encontrado.";
+			return;
+		}
+		include_once DIRECTORIO_VISTAS_BACKEND . "User/editUser.php";
+	}
 
-        $usuarios = UserModel::getAllUsers();
+	function show_login()
+	{
+		include_once DIRECTORIO_VISTAS_BACKEND . "login.php";
+	}
 
-        foreach ($usuarios as $usuario) {
-            if ($usuario->getUsername() === $_POST['username'] && password_verify($usuario->getPassword(), $hash)) {
-                $_SESSION['username'] = $usuario->getUsername();
-                $_SESSION['uuid'] = $usuario->getUuid();
-                if ($usuario->getTipo() === UserType::ADMIN) {
-                    include_once DIRECTORIO_VISTAS_BACKEND . "welcome.php";
-                } else {
-                    include_once DIRECTORIO_VISTAS_FRONTEND . "indice.php";
-                }
-            }
-        }
-        echo "Usuario no encontrado.";
-    }
+	function verify()
+	{
+		$hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		var_dump(password_verify($_POST['password'], $hash));
+		var_dump($_POST);
 
-    function logout()
-    {
-        session_destroy();
-        header("Location: /login");
-        exit;
-    }
+		$usuarios = UserModel::getAllUsers();
+
+		foreach ($usuarios as $usuario) {
+			if ($usuario->getUsername() === $_POST['username'] && password_verify($usuario->getPassword(), $hash)) {
+				$_SESSION['username'] = $usuario->getUsername();
+				$_SESSION['uuid'] = $usuario->getUuid();
+				$_SESSION['tipo'] = $usuario->getTipo();
+				if ($usuario->getTipo() === UserType::ADMIN) {
+					include_once DIRECTORIO_VISTAS_BACKEND . "welcome.php";
+				} else {
+					include_once DIRECTORIO_VISTAS_FRONTEND . "indice.php";
+				}
+			}
+		}
+		echo "Usuario no encontrado.";
+	}
+
+	function logout()
+	{
+		session_destroy();
+		header("Location: /login");
+		exit;
+	}
 }
 

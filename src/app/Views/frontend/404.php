@@ -1,9 +1,16 @@
+<?php
+
+use App\Enum\UserType;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Página no encontrada</title>
     <link rel="stylesheet" href="<?=DIRECTORIO_CSS_FRONTEND?>404.css">
+    <?php  $_SESSION['tipo'] === UserType::ADMIN ? $rutaInicio = '/control' : $rutaInicio = '/';
+    ?>
 
 </head>
     <body>
@@ -20,7 +27,7 @@
         <hr>
         <div class='_1'><?=$_SERVER['REQUEST_URI']?> </div>
         <div class='_2'>NO ENCONTRADA</div>
-        <a class='btn' href='/'>INICIO</a>
+        <a class='btn' href='<?=$rutaInicio?>'>INICIO</a>
     </div>
 
     </body>

@@ -14,13 +14,10 @@ use Phroute\Phroute\RouteCollector;
 // Instancia del objeto router
 $router = new RouteCollector();
 
-
-
 // Rutas de la aplicación
 $router->get('/', function(){
-    return 'Estoy en la pagina principal';
+	return 'Estoy en la pagina principal';
 });
-
 
 //Rutas de Usuario CRUD
 //Rutas asociadas a la vistas de usuarios
@@ -45,8 +42,6 @@ $router->put('/api/user/{id}',[UserController::class,'update']);
 $router->delete('/api/user/{id}',[UserController::class,'destroy']);
 
 
-
-
 //Rutas de Peliculas CRUD
 //Rutas de Servicio API REST
 $router->get('/movie',[MovieController::class,'index']);
@@ -57,7 +52,7 @@ $router->put('/movie/{id}',[MovieController::class,'update']);
 $router->delete('/movie/{id}',[MovieController::class,'destroy']);
 
 $router->get('/control', function(){
-    include_once DIRECTORIO_VISTAS_BACKEND . "welcome.php";
+	include_once DIRECTORIO_VISTAS_BACKEND . "welcome.php";
 });
 
 // Rutas de Director CRUD
@@ -74,25 +69,25 @@ $router->delete('/director/{id}', [DirectorController::class, 'destroy']);
 
 
 $router->get('/password', function(){
-    include_once DIRECTORIO_VISTAS_FRONTEND . "generate-password.php";
+	include_once DIRECTORIO_VISTAS_FRONTEND . "generate-password.php";
 });
 
 $router->get('/control/addPelicula', function(){
-    include_once DIRECTORIO_VISTAS_BACKEND . "Movie/addPelicula.php";
+	include_once DIRECTORIO_VISTAS_BACKEND . "Movie/addPelicula.php";
 });
 
-$method =$_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'POST' && isset($_POST['_method']))
-    $method = strtoupper($_POST['_method']);
+	$method = strtoupper($_POST['_method']);
 
 // Resolver la ruta que debemos cargar
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
 try {
-    $response = $dispatcher->dispatch($method, parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-    echo $response;
+	$response = $dispatcher->dispatch($method, parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+	echo $response;
 } catch (HttpRouteNotFoundException $e){
-    include_once DIRECTORIO_VISTAS_FRONTEND . "404.php";
+	include_once DIRECTORIO_VISTAS_FRONTEND . "404.php";
 };
 
 
@@ -103,8 +98,8 @@ try {
 
 $router->post('/pelicula', function ()
 {
-    var_dump($_POST);
-    var_dump($_FILES);
+	var_dump($_POST);
+	var_dump($_FILES);
 });
 /*
 $router->get('/pass', function(){

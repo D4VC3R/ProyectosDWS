@@ -166,5 +166,23 @@ class User implements \JsonSerializable
 			)
 		);
 	}
+
+	public static function createFromArray(array $userData): User{
+
+		if (!key_exists('uuid', $userData)){
+			$userData['uuid'] = Uuid::uuid4()->toString();
+		}
+
+		$usuario = new User(
+			Uuid::fromString($userData['uuid']),
+			$userData['username'],
+			$userData['password'],
+			$userData['email']
+		);
+
+		$usuario->setEdad($userData['edad']);
+		$usuario->setTipo(UserType::stringToUserType($userData['type']));
+		return $usuario;
+	}
 }
 

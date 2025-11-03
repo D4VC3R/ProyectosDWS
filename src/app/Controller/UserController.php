@@ -31,7 +31,7 @@ class UserController implements ControllerInterface
 		$resultado = User::validateUserCreation($_POST);
 		!is_array($resultado)
 			?
-			var_dump($resultado)
+			UserModel::saveUser($resultado)
 			:
 			include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
 		foreach ($resultado as $error) {

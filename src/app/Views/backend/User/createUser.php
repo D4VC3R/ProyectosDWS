@@ -65,7 +65,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
                     required
             >
                 <option value="normal" selected>Normal</option>
-                <option value="anuncios">Anuncios</option>
+                <option value="anuncios">Admin</option>
                 <option value="premium">Premium</option>
             </select>
             <label for="tipoUsuario">Tipo de Usuario</label>

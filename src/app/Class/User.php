@@ -2,7 +2,9 @@
 
 namespace App\Class;
 
+use App\Controller\UserController;
 use App\Enum\UserType;
+use App\Model\UserModel;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
@@ -156,15 +158,21 @@ class User implements \JsonSerializable
 		}catch(NestedValidationException $errores){
 			return $errores->getMessages();
 		}
-		// TODO buscar el usuario en la base de datos y modificarlo.
-		return new User(
-			Uuid::fromString($userData['uuid']),
-			$userData['username'],
-			$userData['password'],
-			$userData['email'],
-			UserType::stringToUserType($userData['type']
-			)
-		);
+
+		$usuarioEditado = UserModel::getUserById($userData['uuid']);
+		if(isset($userData['username'])){
+			$usuarioEditado->setUsername($userData['username']);
+		}
+		if(isset($userData['email'])){
+			$usuarioEditado->setEmail($userData['email']);
+		}
+		if(isset($userData['edad'])){
+			$usuarioEditado->setEdad($userData['edad']);
+		}
+		if(isset($userData['tipo'])){
+			$usuarioEditado->setTipo($userData['tipo']);
+		}
+		return $usuarioEditado;
 	}
 
 	public static function createFromArray(array $userData): User{

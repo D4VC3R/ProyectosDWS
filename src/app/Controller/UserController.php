@@ -6,6 +6,7 @@ use App\Class\User;
 use App\Enum\UserType;
 use App\Interface\ControllerInterface;
 use App\Model\UserModel;
+use Ramsey\Uuid\Uuid;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Validator as v;
 
@@ -42,13 +43,17 @@ class UserController implements ControllerInterface
 
 	function update($id)
 	{
-		echo $id;
-
-		parse_str(file_get_contents("php://input"), $editData);
-		$editData["uuid"] = $id;
-		$usuario = User::validateUserEdit($editData);
-		var_dump($usuario);
-
+		$usuario = UserModel::getUserById(Uuid::fromString($id));
+		$resultado = User::validateUserEdit($_POST);
+		!is_array($resultado)
+			?
+			UserModel::saveUser($resultado)
+			:
+			include_once DIRECTORIO_VISTAS_BACKEND . "User/editUser.php";
+		foreach ($resultado as $error) {
+			echo $error . "<br>";
+		}
+		return $usuario;
 	}
 
 	function destroy($id)

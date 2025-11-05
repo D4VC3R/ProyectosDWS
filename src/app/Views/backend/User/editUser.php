@@ -70,8 +70,8 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
                 required
             >
                 <option value="normal" <?= $usuario->getTipo()->name === 'NORMAL' ? 'selected' : '' ?>>Normal</option>
-                <option value="anuncios" <?= $usuario->getTipo()->name === 'ANUNCIOS' ? 'selected' : '' ?>>Anuncios</option>
-                <option value="admin" <?= $usuario->getTipo()->name === 'ADMIN' ? 'selected' : '' ?>>Admin</option>
+                <option value="premium" <?= $usuario->getTipo()->name === 'PREMIUM' ? 'selected' : '' ?>>Premium</option>
+                <option value="admin" <?= $usuario->getTipo()->name === 'ADMIN' ? 'selected' : '' ?>>Administrador</option>
             </select>
             <label for="tipoUsuario">Tipo de Usuario</label>
         </div>

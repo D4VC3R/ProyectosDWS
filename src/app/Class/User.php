@@ -17,18 +17,18 @@ class User implements \JsonSerializable
 	private string $password;
 	private string $email;
 	private int $edad;
-	private UserType $tipo;
+	private UserType $type;
 
 
 
 
 	public function __construct(UuidInterface $uuid, string $username, string $password, string $email,
-															UserType $tipo=UserType::NORMAL, int $edad=18){
+															UserType      $type=UserType::NORMAL, int $edad=18){
 		$this->username = $username;
 		$this->password = $password;
 		$this->email = $email;
 		$this->uuid = $uuid;
-		$this->tipo = $tipo;
+		$this->type = $type;
 		$this->edad = $edad;
 	}
 
@@ -87,25 +87,14 @@ class User implements \JsonSerializable
 		return $this;
 	}
 
-	public function getVotaciones(): array
+	public function getType(): UserType
 	{
-		return $this->votaciones;
+		return $this->type;
 	}
 
-	public function setVotaciones(array $votaciones): User
+	public function setType(UserType $type): User
 	{
-		$this->votaciones = $votaciones;
-		return $this;
-	}
-
-	public function getTipo(): UserType
-	{
-		return $this->tipo;
-	}
-
-	public function setTipo(UserType $tipo): User
-	{
-		$this->tipo = $tipo;
+		$this->type = $type;
 		return $this;
 	}
 
@@ -116,8 +105,7 @@ class User implements \JsonSerializable
 			'password' => $this->password,
 			'email' => $this->email,
 			'edad' => $this->edad??"Sin datos",
-			'votaciones' => $this->votaciones,
-			'tipo' => $this->tipo->name
+			'tipo' => $this->type->name
 		];
 	}
 	public static function validateUserCreation(array $userData):User|array{
@@ -141,7 +129,7 @@ class User implements \JsonSerializable
 			$userData['email']);
 
 		$usuario->setEdad($userData['edad']);
-		$usuario->setTipo(UserType::stringToUserType($userData['type']));
+		$usuario->setType(UserType::stringToUserType($userData['type']));
 
 		return $usuario;
 	}
@@ -170,7 +158,7 @@ class User implements \JsonSerializable
 			$usuarioEditado->setEdad($userData['edad']);
 		}
 		if(isset($userData['tipo'])){
-			$usuarioEditado->setTipo($userData['tipo']);
+			$usuarioEditado->setType($userData['tipo']);
 		}
 		return $usuarioEditado;
 	}
@@ -189,7 +177,7 @@ class User implements \JsonSerializable
 		);
 
 		$usuario->setEdad($userData['edad']);
-		$usuario->setTipo(UserType::stringToUserType($userData['type']));
+		$usuario->setType(UserType::stringToUserType($userData['type']));
 		return $usuario;
 	}
 }

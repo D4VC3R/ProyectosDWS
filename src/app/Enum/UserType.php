@@ -9,9 +9,9 @@ enum UserType
     case ADMIN;
 
 
-    public static function stringToUserType(string $tipoUsuario): UserType
+    public static function stringToUserType(string $userType): UserType
     {
-        return match (strtolower($tipoUsuario)) {
+        return match (strtolower($userType)) {
             "normal" => UserType::NORMAL,
             "premium" => UserType::PREMIUM,
             "admin" => UserType::ADMIN,

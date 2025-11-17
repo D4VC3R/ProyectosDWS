@@ -9,7 +9,6 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
 
 <main class="form-signin w-100 m-auto text-center">
     <form action="/user/<?=$usuario->getUuid()?>" method="post">
-        <input type="hidden" name="_method" value="PUT">
         <a href="/control">
             <img class="mb-1" src="<?= DIRECTORIO_IMG_BACKEND?>userLogin.svg" alt="" width="150" height="97"/>
         </a>
@@ -19,7 +18,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
                 type="text"
                 name="username"
                 class="form-control"
-                id="register_username"
+                id="inputUsername"
                 placeholder="Nombre de usuario"
                 value="<?=$usuario->getUsername()?>"
                 required
@@ -31,7 +30,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
                 type="password"
                 name="password"
                 class="form-control m-0"
-                id="register_password"
+                id="inputPassword"
                 placeholder="Password"
                 value="<?=$usuario->getPassword()?>"
                 required
@@ -43,7 +42,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
                 type="email"
                 name="email"
                 class="form-control"
-                id="register_email"
+                id="inputEmail"
                 placeholder="Email"
                 value="<?=$usuario->getEmail()?>"
                 required
@@ -55,7 +54,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
                 type="number"
                 name="edad"
                 class="form-control"
-                id="register_edad"
+                id="inputAge"
                 placeholder="Edad"
                 value="<?=$usuario->getEdad()?>"
                 required
@@ -65,13 +64,13 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
         <div class="form-floating mb-1">
             <select
                 name="type"
-                id="register_usertype"
+                id="inputUsertype"
                 class="form-select"
                 required
             >
-                <option value="normal" <?= $usuario->getTipo()->name === 'NORMAL' ? 'selected' : '' ?>>Normal</option>
-                <option value="premium" <?= $usuario->getTipo()->name === 'PREMIUM' ? 'selected' : '' ?>>Premium</option>
-                <option value="admin" <?= $usuario->getTipo()->name === 'ADMIN' ? 'selected' : '' ?>>Administrador</option>
+                <option value="normal" <?= $usuario->getType()->name === 'NORMAL' ? 'selected' : '' ?>>Normal</option>
+                <option value="premium" <?= $usuario->getType()->name === 'PREMIUM' ? 'selected' : '' ?>>Premium</option>
+                <option value="admin" <?= $usuario->getType()->name === 'ADMIN' ? 'selected' : '' ?>>Administrador</option>
             </select>
             <label for="tipoUsuario">Tipo de Usuario</label>
         </div>
@@ -85,5 +84,44 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
         <p class="mt-5 mb-3 text-body-secondary">&copy; David Cerdán - 2025</p>
     </form>
 </main>
+<script>
+
+    function peticionPUT(){
+
+        let username = document.getElementById('inputUsername');
+        let password = document.getElementById('inputPassword');
+        let email = document.getElementById('inputEmail');
+        let edad = document.getElementById('inputEdad');
+        let type = document.getElementById('inputUsertype');
+
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify({
+            "username": username.value,
+            "password": password.value,
+            "email": email.value,
+            "edad": edad.value,
+            "type": type.value
+        });
+
+        const requestOptions = {
+            method: "PUT",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
+
+        fetch("http://localhost:8080/user/<?=$usuario->getUuid()?>", requestOptions)
+            .then((response) => response.text())
+            .then((result) => volverAUsuarios())
+            .catch((error) => console.error(error));
+    }
+
+    function volverAUsuarios(){
+        window.location.replace("http://localhost:8080/user")
+    }
+</script>
+
 </body>
 </html>

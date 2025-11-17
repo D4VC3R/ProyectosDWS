@@ -15,8 +15,12 @@ class UserController implements ControllerInterface
 	function index()
 	{
 		$usuarios = UserModel::getAllUsers();
-
-		include_once DIRECTORIO_VISTAS_BACKEND . "User/allusers.php";
+		if($_SERVER["REQUEST_URI"]=="api"){
+			http_response_code(201);
+			return json_encode($usuarios);
+		}else{
+			include_once DIRECTORIO_VISTAS_BACKEND."User/allUsers.php";
+		}
 
 	}
 
@@ -24,36 +28,37 @@ class UserController implements ControllerInterface
 	{
 		$usuario = UserModel::getUserById($id);
 		include_once DIRECTORIO_VISTAS_BACKEND . "User/showUser.php";
+	}
 
+	function create()
+	{
+		include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
 	}
 
 	function store()
 	{
 		$resultado = User::validateUserCreation($_POST);
-		!is_array($resultado)
-			?
-			UserModel::saveUser($resultado)
-			:
-			include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
-		foreach ($resultado as $error) {
-			echo $error . "<br>";
-		}
 
+		if (!is_array($resultado)){
+			UserModel::saveUser($resultado);
+			header('Location: /user');
+		}else{
+			include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
+			foreach ($resultado as $error) {
+				echo $error . "<br>";
+			}
+		}
 	}
 
 	function update($id)
 	{
-		$usuario = UserModel::getUserById(Uuid::fromString($id));
-		$resultado = User::validateUserEdit($_POST);
-		!is_array($resultado)
-			?
-			UserModel::saveUser($resultado)
-			:
-			include_once DIRECTORIO_VISTAS_BACKEND . "User/editUser.php";
-		foreach ($resultado as $error) {
-			echo $error . "<br>";
-		}
-		return $usuario;
+		$editData = json_decode(file_get_contents("php://input"), true);
+
+		$editData['uuid'] = $id;
+
+		$usuario = User::validateUserEdit($editData);
+
+		UserModel::updateUser($usuario);
 	}
 
 	function destroy($id)
@@ -67,12 +72,6 @@ class UserController implements ControllerInterface
 		}
 
 		echo "Se ha eliminado el usuario: " . $usuario->getUsername();
-		var_dump($usuario);
-	}
-
-	function create()
-	{
-		include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
 	}
 
 	function edit($id)
@@ -104,8 +103,8 @@ class UserController implements ControllerInterface
 			if ($usuario->getUsername() === $_POST['username'] && password_verify($usuario->getPassword(), $hash)) {
 				$_SESSION['username'] = $usuario->getUsername();
 				$_SESSION['uuid'] = $usuario->getUuid();
-				$_SESSION['tipo'] = $usuario->getTipo();
-				if ($usuario->getTipo() === UserType::ADMIN) {
+				$_SESSION['type'] = $usuario->getType();
+				if ($usuario->getType() === UserType::ADMIN) {
 					include_once DIRECTORIO_VISTAS_BACKEND . "welcome.php";
 				} else {
 					include_once DIRECTORIO_VISTAS_FRONTEND . "indice.php";

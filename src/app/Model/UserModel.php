@@ -3,10 +3,8 @@
 namespace App\Model;
 
 use App\Class\User;
-use App\Enum\UserType;
 use PDO;
 use PDOException;
-use Ramsey\Uuid\Uuid;
 
 class UserModel{
 
@@ -74,7 +72,24 @@ class UserModel{
 		}
 	}
 
-	public static function getUserByEmail(string $email): ?User{}
+	public static function getUserByEmail(string $email): ?User{
+		try {
+			$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "davcerval", "davcerval");
+			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		} catch (PDOException $e) {
+			return null;
+		}
+		$sql = "SELECT * FROM user WHERE email = :email";
+
+		$sentenciaPreparada = $conexion->prepare($sql);
+		$sentenciaPreparada->execute(['email' => $email]);
+		$resultado = $sentenciaPreparada->fetch(PDO::FETCH_ASSOC);
+		if ($resultado){
+			return User::createFromArray($resultado);
+		}else{
+			return null;
+		}
+	}
 
 	public static function saveUser(User $user):bool{
 
@@ -93,7 +108,7 @@ class UserModel{
 		$sentenciaPreparada->bindValue('password', $user->getPassword());
 		$sentenciaPreparada->bindValue('email', $user->getEmail());
 		$sentenciaPreparada->bindValue('edad', $user->getEdad());
-		$sentenciaPreparada->bindValue('type', $user->getTipo()->name);
+		$sentenciaPreparada->bindValue('type', $user->getType()->name);
 
 		$sentenciaPreparada->execute();
 
@@ -102,5 +117,35 @@ class UserModel{
 		}else{
 			return false;
 		}
+	}
+
+	public static function updateUser(User $user):bool{
+
+		try {
+			$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "davcerval", "davcerval");
+			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		} catch (PDOException $e) {
+			echo "Error: " . $e->getMessage();
+			return false;
+		}
+		$sql = "UPDATE user SET username=:username, password=:password, email=:email, edad=:edad, type=:type WHERE uuid=:uuid";
+		$sentenciaPreparada = $conexion->prepare($sql);
+
+		$sentenciaPreparada->bindValue('username', $user->getUsername());
+		$sentenciaPreparada->bindValue('password', $user->getPassword());
+		$sentenciaPreparada->bindValue('email', $user->getEmail());
+		$sentenciaPreparada->bindValue('edad', $user->getEdad());
+		$sentenciaPreparada->bindValue('type', $user->getType()->name);
+
+		$sentenciaPreparada->execute();
+
+		if ($sentenciaPreparada->rowCount()>0) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public static function deleteUser(User $user):bool{
+		return true;
 	}
 }

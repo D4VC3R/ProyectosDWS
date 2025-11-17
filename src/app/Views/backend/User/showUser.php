@@ -29,14 +29,14 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
                     <p><strong>UUID:</strong> <code><?= $usuario->getUuid() ?></code></p>
                     <p><strong>Edad:</strong> <?= $usuario->getEdad() ?> años</p>
                     <?php
-                    $badgeClass = match($usuario->getTipo()->name) {
+                    $badgeClass = match($usuario->getType()->name) {
                         'NORMAL' => 'bg-primary',
                         'ANUNCIOS' => 'bg-warning',
                         'PREMIUM' => 'bg-success',
                         default => 'bg-secondary'
                     };
                     ?>
-                    <p><strong>Tipo:</strong> <span class="badge <?= $badgeClass ?>"><?= $usuario->getTipo()->name ?></span></p>
+                    <p><strong>Tipo:</strong> <span class="badge <?= $badgeClass ?>"><?= $usuario->getType()->name ?></span></p>
                 </div>
             </div>
         </div>

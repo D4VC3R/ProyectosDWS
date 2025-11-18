@@ -2,123 +2,197 @@
 
 namespace App\Controller;
 
+use App\Auxiliar\Auxiliar;
 use App\Class\User;
 use App\Enum\UserType;
 use App\Interface\ControllerInterface;
 use App\Model\UserModel;
-use Ramsey\Uuid\Uuid;
-use Respect\Validation\Exceptions\ValidationException;
+use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator as v;
 
 class UserController implements ControllerInterface
 {
+
 	function index()
 	{
 		$usuarios = UserModel::getAllUsers();
-		if($_SERVER["REQUEST_URI"]=="api"){
+		if (Auxiliar::isAPIRequest()){
 			http_response_code(201);
 			return json_encode($usuarios);
 		}else{
 			include_once DIRECTORIO_VISTAS_BACKEND."User/allUsers.php";
 		}
-
 	}
 
 	function show($id)
 	{
-		$usuario = UserModel::getUserById($id);
-		include_once DIRECTORIO_VISTAS_BACKEND . "User/showUser.php";
+		$usuario=UserModel::getUserById($id);
+		if (Auxiliar::isAPIRequest()){
+			http_response_code(200);
+			return json_encode($usuario);
+		}else {
+			if ($usuario->isAdmin()) {
+				//Si el usuario es administrador
+				include_once DIRECTORIO_VISTAS_BACKEND . "User/mostrarUser.php";
+			} else {
+				//Si el usuario no es un usuario administrador se le muestra vista de frontend
+				include_once DIRECTORIO_VISTAS_FRONTEND . "user/frontShowUser.php";
+			}
+		}
 	}
 
 	function create()
 	{
-		include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
+		return include_once DIRECTORIO_VISTAS_BACKEND."User/createUser.php";
 	}
+
 
 	function store()
 	{
-		$resultado = User::validateUserCreation($_POST);
+		$errores = User::validateUserCreation($_POST);
 
-		if (!is_array($resultado)){
-			UserModel::saveUser($resultado);
-			header('Location: /user');
+		if ($errores){
+			//Tenemos los datos con errores
+			if (Auxiliar::isAPIRequest()){
+				http_response_code(400);
+				return json_encode([
+					"error"=>true,
+					"message"=>"Fallo en la validación de los datos",
+					"data"=>$errores,
+					"code"=>400
+				]);
+			}else {
+				include_once DIRECTORIO_VISTAS_BACKEND . "/User/createUser.php";
+			}
+
 		}else{
-			include_once DIRECTORIO_VISTAS_BACKEND . "User/createUser.php";
-			foreach ($resultado as $error) {
-				echo $error . "<br>";
+			//La validación a creado un usuario correcto y tengo que guardarlo
+			$usuario = User::createFromArray($_POST);
+			UserModel::saveUser($usuario);
+			if (Auxiliar::isAPIRequest()){
+				http_response_code(201);
+				return json_encode([
+					"error"=>false,
+					"message"=>"Usuario creado correctamente",
+					"data"=>$usuario,
+					"code"=>400
+				]);
+			}else {
+				header('Location: /user');
 			}
 		}
+
+	}
+	function edit($id)
+	{
+		// Recuperar los datos de un usuario del Modelo
+		$usuario = UserModel::getUserById($id);
+
+		//Llamar a la vista que me muestre los datos del usuario
+		include_once DIRECTORIO_VISTAS_BACKEND."User/editUser.php";
 	}
 
 	function update($id)
 	{
-		$editData = json_decode(file_get_contents("php://input"), true);
+		//Leo del fichero input los datos que me han llegado en la petición PUT
+		$editData=json_decode(file_get_contents("php://input"),true);
 
-		$editData['uuid'] = $id;
+		//Añado el uuid a los datos que me han llegado en la petición PUT
+		$editData['uuid']=$id;
 
-		$usuario = User::validateUserEdit($editData);
+		//Valido los datos que me han llegado en la petición PUT
+		$errores = User::validateUserEdit($editData);
 
-		UserModel::updateUser($usuario);
+		if (!$errores){
+			//No hay errores en la validación de usuarios
+			$usuarioAntiguo = UserModel::getUserById($id);
+			$usuarioNuevo = User::editFromArray($usuarioAntiguo,$editData);
+			if (UserModel::updateUser($usuarioNuevo)){
+				http_response_code(401);
+				return json_encode([
+					"error"=>true,
+					"message"=>"Error modificando el usuario",
+					"code"=>401
+				]);
+			}else{
+				http_response_code(200);
+				return json_encode([
+					"error"=>false,
+					"message"=>"Usuario modificado correctamente",
+					"code"=>200
+				]);
+			}
+		}else{
+			//Hay errores em la validación de usuario
+			http_response_code(401);
+			return json_encode([
+				"error"=>true,
+				"message"=>"Error de validación de los datos del usuario",
+				"data"=>$errores,
+				"code"=>401
+			]);
+		}
+
 	}
 
 	function destroy($id)
 	{
-		$usuario = UserModel::getUserById($id);
-
-		if ($usuario === null) {
-			http_response_code(404);
-			echo "Usuario no encontrado.";
-			return;
+		if (UserModel::deleteUserById($id)){
+			//El usuario se ha borrado correctamente
+			http_response_code(200);
+			return json_encode([
+				"error"=>false,
+				"message"=>"El usuario con $id se ha borrado correctamente",
+				"code"=>200
+			]);
+		}else{
+			//Ha habido algún problema con la base de datos al borrar el usuario
+			http_response_code(401);
+			return json_encode([
+				"error"=>true,
+				"message"=>"El usuario con $id no se ha podido borrar",
+				"code"=>401
+			]);
 		}
-
-		echo "Se ha eliminado el usuario: " . $usuario->getUsername();
 	}
 
-	function edit($id)
-	{
-		$usuario = UserModel::getUserById($id);
 
-		if ($usuario === null) {
-			http_response_code(404);
-			echo "Usuario no encontrado.";
-			return;
-		}
-		include_once DIRECTORIO_VISTAS_BACKEND . "User/editUser.php";
-	}
 
-	function show_login()
-	{
-		include_once DIRECTORIO_VISTAS_BACKEND . "login.php";
-	}
 
-	function verify()
-	{
-		$hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-		var_dump(password_verify($_POST['password'], $hash));
-		var_dump($_POST);
+	function verify(){
+		//Obtenemos los datos de la petición POST
 
-		$usuarios = UserModel::getAllUsers();
+		//Petición a la base de datos para recuperar la info del usuario
+		$usuario = UserModel::getUserByUsername($_POST['username']);
 
-		foreach ($usuarios as $usuario) {
-			if ($usuario->getUsername() === $_POST['username'] && password_verify($usuario->getPassword(), $hash)) {
-				$_SESSION['username'] = $usuario->getUsername();
-				$_SESSION['uuid'] = $usuario->getUuid();
-				$_SESSION['type'] = $usuario->getType();
-				if ($usuario->getType() === UserType::ADMIN) {
-					include_once DIRECTORIO_VISTAS_BACKEND . "welcome.php";
-				} else {
-					include_once DIRECTORIO_VISTAS_FRONTEND . "indice.php";
-				}
+		if (password_verify($_POST['password'],$usuario->getPassword())){
+			//Tengo un usuario valido
+			$_SESSION['user']=$usuario;
+			if ($usuario->isAdmin()){
+				//Tenemos a un usuario administrador
+				header('Location:/user');
+			}else{
+				//Tenemos a un usuario corriente
+				header('Location: /');
 			}
+
+		}else{
+			$error="Usuario o contraseña incorrecto";
+			include_once DIRECTORIO_VISTAS_FRONTEND."404.php";
+			//No tengo un usuario valido
 		}
-		echo "Usuario no encontrado.";
+
+
 	}
 
-	function logout()
-	{
+	function logout(){
 		session_destroy();
-		header("Location: /login");
-		exit;
+		return header('Location: /');
+
+	}
+
+// Habría que moverla a frontend cuando tenga las vistas
+	function show_login(){
+		include_once "app/Views/backend/login.php";
 	}
 }
-

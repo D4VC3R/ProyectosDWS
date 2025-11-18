@@ -5,13 +5,14 @@ namespace App\Model;
 use App\Class\User;
 use PDO;
 use PDOException;
+use App\Class\Database;
 
 class UserModel{
 
 	public static function getAllUsers(): ?array
 		{
 			try {
-				$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "davcerval", "davcerval");
+				$conexion = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 				$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			} catch (PDOException $e) {
 				return null;
@@ -36,7 +37,7 @@ class UserModel{
 
 	public static function getUserById(string $uuid): ?User{
 		try {
-			$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "davcerval", "davcerval");
+			$conexion = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
 			return null;
@@ -55,7 +56,7 @@ class UserModel{
 
 	public static function getUserByUsername(string $username): ?User{
 		try {
-			$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "davcerval", "davcerval");
+			$conexion = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
 			return null;
@@ -74,7 +75,7 @@ class UserModel{
 
 	public static function getUserByEmail(string $email): ?User{
 		try {
-			$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "davcerval", "davcerval");
+			$conexion = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
 			return null;
@@ -94,7 +95,7 @@ class UserModel{
 	public static function saveUser(User $user):bool{
 
 		try {
-			$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "davcerval", "davcerval");
+			$conexion = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
 			echo "Error: " . $e->getMessage();
@@ -122,7 +123,7 @@ class UserModel{
 	public static function updateUser(User $user):bool{
 
 		try {
-			$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "davcerval", "davcerval");
+			$conexion = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
 			echo "Error: " . $e->getMessage();
@@ -147,5 +148,27 @@ class UserModel{
 	}
 	public static function deleteUser(User $user):bool{
 		return true;
+	}
+	public static function deleteUserById(string $id):bool{
+		try {
+			$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "miguela", "aleugim");
+			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		}catch (\PDOException $error){
+			echo $error;
+			return false;
+		}
+
+		$sql = "DELETE FROM user WHERE uuid=:uuid";
+		$sentenciaPreparada = $conexion->prepare($sql);
+
+		$sentenciaPreparada->bindValue('uuid',$id);
+
+		$sentenciaPreparada->execute();
+
+		if($sentenciaPreparada->rowCount()>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

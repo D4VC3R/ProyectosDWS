@@ -157,8 +157,8 @@ class User implements \JsonSerializable
 		if(isset($userData['edad'])){
 			$usuarioEditado->setEdad($userData['edad']);
 		}
-		if(isset($userData['tipo'])){
-			$usuarioEditado->setType($userData['tipo']);
+		if(isset($userData['type'])){
+			$usuarioEditado->setType($userData['type']);
 		}
 		return $usuarioEditado;
 	}
@@ -179,6 +179,23 @@ class User implements \JsonSerializable
 		$usuario->setEdad($userData['edad']);
 		$usuario->setType(UserType::stringToUserType($userData['type']));
 		return $usuario;
+	}
+
+	public function isAdmin():bool
+	{
+		return $this->getType() === UserType::ADMIN;
+	}
+
+	public static function editFromArray(User $usuarioAntiguo,array $userData):?User{
+		$usuarioAntiguo=UserModel::getUserById($userData['uuid']);
+
+		$usuarioAntiguo->setUsername($userData['username']??$usuarioAntiguo->getUsername());
+		$usuarioAntiguo->setPassword(password_hash($userData['password'],PASSWORD_DEFAULT)??$usuarioAntiguo->getPassword());
+		$usuarioAntiguo->setEmail($userData['email']??$usuarioAntiguo->getEmail());
+		$usuarioAntiguo->setEdad($userData['edad']??$usuarioAntiguo->getEdad());
+		$usuarioAntiguo->setType(UserType::stringToUserType($userData['type']??$usuarioAntiguo->getType()->name));
+
+		return $usuarioAntiguo;
 	}
 }
 

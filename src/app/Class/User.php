@@ -19,9 +19,6 @@ class User implements \JsonSerializable
 	private int $edad;
 	private UserType $type;
 
-
-
-
 	public function __construct(UuidInterface $uuid, string $username, string $password, string $email,
 															UserType      $type=UserType::NORMAL, int $edad=18){
 		$this->username = $username;
@@ -102,14 +99,13 @@ class User implements \JsonSerializable
 	{
 		return [
 			'username' => $this->username,
-			'password' => $this->password,
 			'email' => $this->email,
-			'edad' => $this->edad??"Sin datos",
+			'edad' => $this->edad ?? "Sin datos",
 			'tipo' => $this->type->name
 		];
 	}
-	public static function validateUserCreation(array $userData):User|array{
 
+	public static function validateUserCreation(array $userData):User|array{
 		try {
 			v::key('username', v::stringType())
 				->key('password', v::stringType()->length(3, 16))
@@ -118,14 +114,16 @@ class User implements \JsonSerializable
 				->key('type', v::in(["normal", "anuncios", "admin"])
 				)->assert($userData);
 		}catch(NestedValidationException $errores){
-
 			return $errores->getMessages();
 		}
+
+		// Hashear la contraseña antes de crear el objeto usuario
+		$hashedPassword = password_hash($userData['password'], PASSWORD_DEFAULT);
 
 		$usuario = new User(
 			Uuid::uuid4(),
 			$userData['username'],
-			$userData['password'],
+			$hashedPassword,
 			$userData['email']);
 
 		$usuario->setEdad($userData['edad']);
@@ -157,8 +155,9 @@ class User implements \JsonSerializable
 		if(isset($userData['edad'])){
 			$usuarioEditado->setEdad($userData['edad']);
 		}
+		// usar la clave 'type' y convertirla correctamente
 		if(isset($userData['type'])){
-			$usuarioEditado->setType($userData['type']);
+			$usuarioEditado->setType(UserType::stringToUserType($userData['type']));
 		}
 		return $usuarioEditado;
 	}
@@ -169,10 +168,18 @@ class User implements \JsonSerializable
 			$userData['uuid'] = Uuid::uuid4()->toString();
 		}
 
+		// asegurar que la contraseña llega hasheada (si viene en texto, hashearla aquí)
+		$password = $userData['password'];
+		if ($password === null || $password === '') {
+			$password = ''; // o lanzar excepción según tu lógica
+		} else {
+			$password = password_hash($password, PASSWORD_DEFAULT);
+		}
+
 		$usuario = new User(
 			Uuid::fromString($userData['uuid']),
 			$userData['username'],
-			$userData['password'],
+			$password,
 			$userData['email']
 		);
 
@@ -181,21 +188,25 @@ class User implements \JsonSerializable
 		return $usuario;
 	}
 
-	public function isAdmin():bool
+	public function isAdmin()
 	{
 		return $this->getType() === UserType::ADMIN;
 	}
 
 	public static function editFromArray(User $usuarioAntiguo,array $userData):?User{
-		$usuarioAntiguo=UserModel::getUserById($userData['uuid']);
+		$usuarioAntiguo = UserModel::getUserById($userData['uuid']);
 
-		$usuarioAntiguo->setUsername($userData['username']??$usuarioAntiguo->getUsername());
-		$usuarioAntiguo->setPassword(password_hash($userData['password'],PASSWORD_DEFAULT)??$usuarioAntiguo->getPassword());
-		$usuarioAntiguo->setEmail($userData['email']??$usuarioAntiguo->getEmail());
-		$usuarioAntiguo->setEdad($userData['edad']??$usuarioAntiguo->getEdad());
-		$usuarioAntiguo->setType(UserType::stringToUserType($userData['type']??$usuarioAntiguo->getType()->name));
+		$usuarioAntiguo->setUsername($userData['username'] ?? $usuarioAntiguo->getUsername());
+
+		// Solo hashear y setear si viene nueva contraseña
+		if (isset($userData['password']) && $userData['password'] !== '') {
+			$usuarioAntiguo->setPassword(password_hash($userData['password'], PASSWORD_DEFAULT));
+		}
+
+		$usuarioAntiguo->setEmail($userData['email'] ?? $usuarioAntiguo->getEmail());
+		$usuarioAntiguo->setEdad($userData['edad'] ?? $usuarioAntiguo->getEdad());
+		$usuarioAntiguo->setType(UserType::stringToUserType($userData['type'] ?? $usuarioAntiguo->getType()->name));
 
 		return $usuarioAntiguo;
 	}
 }
-

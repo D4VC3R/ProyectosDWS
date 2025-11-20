@@ -151,7 +151,7 @@ class UserModel{
 	}
 	public static function deleteUserById(string $id):bool{
 		try {
-			$conexion = new PDO("mysql:host=mariadb;dbname=proyecto1", "miguela", "aleugim");
+            $conexion = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}catch (\PDOException $error){
 			echo $error;

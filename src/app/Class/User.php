@@ -188,8 +188,8 @@ class User implements \JsonSerializable
 		return $usuario;
 	}
 
-	public function isAdmin()
-	{
+	public function isAdmin(): bool
+  {
 		return $this->getType() === UserType::ADMIN;
 	}
 

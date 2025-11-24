@@ -60,7 +60,7 @@ class Village
 
   public function getCoordinates(): array
   {
-    return $this->coordinates;
+    return array_values($this->coordinates);
   }
 
   public function setCoordinates(array $coordinates): Village

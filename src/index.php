@@ -6,6 +6,7 @@ include_once './auxiliar/funciones.php';
 session_start();
 // Directiva para insertar o utilizar el router
 use App\Controller\UserController;
+use App\Controller\VillageController;
 use Phroute\Phroute\Exception\HttpRouteNotFoundException;
 use Phroute\Phroute\RouteCollector;
 
@@ -53,8 +54,8 @@ $router->get('/admin',function(){
 
 //Rutas de Usuario CRUD
 //Rutas asociadas a las vistas de usuario
-$router->get('/user/{id}/edit',[UserController::class,'edit'],["before"=>'auth']);
 $router->get('/user/create',[UserController::class,'create']);
+$router->get('/user/{id}/edit',[UserController::class,'edit'],["before"=>'auth']);
 $router->get('/login',[UserController::class,'show_login']);
 $router->post('/user/login',[UserController::class,'verify']);
 $router->get('/user/logout',[UserController::class,'logout'],["before"=>'auth']);
@@ -66,15 +67,15 @@ $router->post('/user',[UserController::class,'store']);
 $router->put('/user/{id}',[UserController::class,'update']);
 $router->delete('/user/{id}',[UserController::class,'destroy'],["before"=>'admin']);
 
-//Rutas de Servicio API REST
-$router->get('/api/user',[UserController::class,'index']);
-$router->get('/api/user/{id}',[UserController::class,'show']);
-$router->post('/api/user',[UserController::class,'store']);
-$router->put('/api/user/{id}',[UserController::class,'update']);
-$router->delete('/api/user/{id}',[UserController::class,'destroy']);
 
+$router->get('/village/create', [VillageController::class,'create']);
+$router->get('/village/{$id}/edit',[VillageController::class,'edit']);
 
-$router->get('/village',)
+$router->get('/village',[VillageController::class,'index']);
+$router->get('/village/{$id}',[VillageController::class,'show']);
+$router->post('/village',[VillageController::class, 'store']);
+$router->put('/village/{id}', [VillageController::class,'update']);
+$router->delete('/village/{$id}', [VillageController::class,'destroy']);
 
 
 $router->get('/control', function(){

@@ -1,5 +1,5 @@
 <?php
-$titulo = "Detalles de Usuario";
+$titulo = "Detalles de " . $village->getName();
 $tituloSeccion = "Detalles";
 include_once(DIRECTORIO_TEMPLATE_BACKEND . "head.php");
 include_once(DIRECTORIO_TEMPLATE_BACKEND . "header.php");
@@ -11,7 +11,7 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
 <div class="container mt-4">
     <div class="card">
         <div class="card-header">
-            <h3>Detalles del Usuario</h3>
+            <h3>Detalles</h3>
         </div>
         <div class="card-body">
             <div class="row">
@@ -22,32 +22,23 @@ include_once(DIRECTORIO_TEMPLATE_BACKEND . "hamburger.php");
                          style="max-width: 200px;">
                 </div>
                 <div class="col-md-8">
-                    <h4><?= $usuario->getUsername() ?></h4>
+                    <h4><?= $village->getName() ?></h4>
                     <hr>
-                    <p><strong>Email:</strong> <?= $usuario->getEmail() ?></p>
+                    <p><strong>Región:</strong> <?= $village->getRegion() ?></p>
                     <!-- El uuid pasa a string automaticamente porque está dentro de la etiqueta <code> -->
-                    <p><strong>UUID:</strong> <code><?= $usuario->getUuid() ?></code></p>
-                    <p><strong>Edad:</strong> <?= $usuario->getEdad() ?> años</p>
-                    <?php
-                    $badgeClass = match($usuario->getType()->name) {
-                        'NORMAL' => 'bg-primary',
-                        'ANUNCIOS' => 'bg-warning',
-                        'PREMIUM' => 'bg-success',
-                        default => 'bg-secondary'
-                    };
-                    ?>
-                    <p><strong>Tipo:</strong> <span class="badge <?= $badgeClass ?>"><?= $usuario->getType()->name ?></span></p>
+                    <p><strong>C.P.:</strong> <code><?= $village->getPostalCode() ?></code></p>
+                    <p><strong>Coordenadas:</strong> <?= $$village->getCoordinates() ?> años</p>
                 </div>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-between align-items-center">
             <div>
-                <a href="/user" class="btn btn-secondary me-2">Volver</a>
-                <a href="/user/<?= $usuario->getUuid() ?>/edit" class="btn btn-warning">Editar</a>
+                <a href="/village" class="btn btn-secondary me-2">Volver</a>
+                <a href="/user/<?= $village->getId() ?>/edit" class="btn btn-warning">Editar</a>
             </div>
-            <form action="/user/<?= $usuario->getUuid() ?>"
+            <form action="/user/<?= $village->getId() ?>"
                   method="post"
-                  onsubmit="return confirm('¿Estás seguro de eliminar este usuario?');"
+                  onsubmit="return confirm('¿Estás seguro de eliminar este pueblo?');"
                   class="m-0">
                 <button type="submit"
                         class="btn btn-danger"

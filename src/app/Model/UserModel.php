@@ -18,7 +18,7 @@ class UserModel{
 				return null;
 			}
 
-			$sql = "SELECT * FROM user";
+			$sql = "SELECT * FROM test_user";
 
 			$sentenciaPreparada = $conexion->prepare($sql);
 			$sentenciaPreparada->execute();
@@ -42,7 +42,7 @@ class UserModel{
 		} catch (PDOException $e) {
 			return null;
 		}
-		$sql = "SELECT * FROM user WHERE uuid = :uuid";
+		$sql = "SELECT * FROM test_user WHERE uuid = :uuid";
 
 		$sentenciaPreparada = $conexion->prepare($sql);
 		$sentenciaPreparada->execute(['uuid' => $uuid]);
@@ -61,7 +61,7 @@ class UserModel{
 		} catch (PDOException $e) {
 			return null;
 		}
-		$sql = "SELECT * FROM user WHERE username = :username";
+		$sql = "SELECT * FROM test_user WHERE username = :username";
 
 		$sentenciaPreparada = $conexion->prepare($sql);
 		$sentenciaPreparada->execute(['username' => $username]);
@@ -80,7 +80,7 @@ class UserModel{
 		} catch (PDOException $e) {
 			return null;
 		}
-		$sql = "SELECT * FROM user WHERE email = :email";
+		$sql = "SELECT * FROM test_user WHERE email = :email";
 
 		$sentenciaPreparada = $conexion->prepare($sql);
 		$sentenciaPreparada->execute(['email' => $email]);
@@ -101,7 +101,7 @@ class UserModel{
 			echo "Error: " . $e->getMessage();
 			return false;
 		}
-		$sql = "INSERT INTO user values(:uuid,:username,:password,:email,:village,:type)";
+		$sql = "INSERT INTO test_user values(:uuid,:username,:password,:email,:village,:type)";
 		$sentenciaPreparada = $conexion->prepare($sql);
 
 		$sentenciaPreparada->bindValue('uuid', $user->getUuid());
@@ -117,7 +117,7 @@ class UserModel{
 			echo "Error: " . $e->getMessage();
 			return false;
 		}
-		$sql = "UPDATE user SET username=:username, password=:password, email=:email, village=:village, type=:type WHERE uuid=:uuid";
+		$sql = "UPDATE test_user SET username=:username, password=:password, email=:email, village=:village, type=:type WHERE uuid=:uuid";
 		$sentenciaPreparada = $conexion->prepare($sql);
 
     return self::isValid($sentenciaPreparada, $user);
@@ -134,7 +134,7 @@ class UserModel{
 			return false;
 		}
 
-		$sql = "DELETE FROM user WHERE uuid=:uuid";
+		$sql = "DELETE FROM test_user WHERE uuid=:uuid";
 		$sentenciaPreparada = $conexion->prepare($sql);
 
 		$sentenciaPreparada->bindValue('uuid',$id);

@@ -9,12 +9,12 @@ class VillageController implements ControllerInterface
 
   function index()
   {
-
+      include_once DIRECTORIO_VISTAS_BACKEND . "Villages/allVillages.php";
   }
 
   function show($id)
   {
-    // TODO: Implement show() method.
+    include_once DIRECTORIO_VISTAS_BACKEND . "Villages/showVillage.php";
   }
 
   function store()
@@ -34,11 +34,11 @@ class VillageController implements ControllerInterface
 
   function create()
   {
-    // TODO: Implement create() method.
+    include_once DIRECTORIO_VISTAS_BACKEND . "Villages/createVillage.php";
   }
 
   function edit($id)
   {
-    // TODO: Implement edit() method.
+    include_once DIRECTORIO_VISTAS_BACKEND . "Villages/editVillage.php";
   }
 }

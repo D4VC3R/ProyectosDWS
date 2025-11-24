@@ -66,7 +66,7 @@ class UserController implements ControllerInterface
 			}
 
 		}else{
-			//La validación a creado un usuario correcto y tengo que guardarlo
+			//La validación ha creado un usuario correcto y tengo que guardarlo
 			$usuario = User::createFromArray($_POST);
 			UserModel::saveUser($usuario);
 			if (Auxiliar::isAPIRequest()){

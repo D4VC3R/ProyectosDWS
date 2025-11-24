@@ -36,11 +36,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="/control/addPelicula">
+                    <a class="nav-link d-flex align-items-center gap-2" href="/village">
                         <svg class="bi" aria-hidden="true">
                             <use xlink:href="#file-earmark"></use>
                         </svg>
-                        Películas
+                        Pueblos
                     </a>
                 </li>
                 <li class="nav-item">

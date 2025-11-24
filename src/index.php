@@ -74,8 +74,7 @@ $router->put('/api/user/{id}',[UserController::class,'update']);
 $router->delete('/api/user/{id}',[UserController::class,'destroy']);
 
 
-
-//Rutas de Servicio API REST
+$router->get('/village',)
 
 
 $router->get('/control', function(){

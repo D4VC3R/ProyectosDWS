@@ -13,7 +13,11 @@ class Database
 	private string $username;
 	private string $password;
 
-	public function __construct(string $host=DB_SERVER,string $dbname=DB_NAME, string $username=DB_USERNAME, string $password=DB_PASSWORD,int $port=DB_PORT)
+	public function __construct(string $host=DB_SERVER,
+                              string $dbname=DB_NAME,
+                              string $username=DB_USERNAME,
+                              string $password=DB_PASSWORD,
+                              int $port=DB_PORT)
 	{
 		$this->host=$host;
 		$this->dbname=$dbname;

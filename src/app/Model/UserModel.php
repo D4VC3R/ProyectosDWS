@@ -101,24 +101,12 @@ class UserModel{
 			echo "Error: " . $e->getMessage();
 			return false;
 		}
-		$sql = "INSERT INTO user values(:uuid,:username,:password,:email,:edad,:type)";
+		$sql = "INSERT INTO user values(:uuid,:username,:password,:email,:village,:type)";
 		$sentenciaPreparada = $conexion->prepare($sql);
 
 		$sentenciaPreparada->bindValue('uuid', $user->getUuid());
-		$sentenciaPreparada->bindValue('username', $user->getUsername());
-		$sentenciaPreparada->bindValue('password', $user->getPassword());
-		$sentenciaPreparada->bindValue('email', $user->getEmail());
-		$sentenciaPreparada->bindValue('edad', $user->getEdad());
-		$sentenciaPreparada->bindValue('type', $user->getType()->name);
-
-		$sentenciaPreparada->execute();
-
-		if ($sentenciaPreparada->rowCount()>0) {
-			return true;
-		}else{
-			return false;
-		}
-	}
+    return self::isValid($sentenciaPreparada, $user);
+  }
 
 	public static function updateUser(User $user):bool{
 
@@ -129,23 +117,11 @@ class UserModel{
 			echo "Error: " . $e->getMessage();
 			return false;
 		}
-		$sql = "UPDATE user SET username=:username, password=:password, email=:email, edad=:edad, type=:type WHERE uuid=:uuid";
+		$sql = "UPDATE user SET username=:username, password=:password, email=:email, village=:village, type=:type WHERE uuid=:uuid";
 		$sentenciaPreparada = $conexion->prepare($sql);
 
-		$sentenciaPreparada->bindValue('username', $user->getUsername());
-		$sentenciaPreparada->bindValue('password', $user->getPassword());
-		$sentenciaPreparada->bindValue('email', $user->getEmail());
-		$sentenciaPreparada->bindValue('edad', $user->getEdad());
-		$sentenciaPreparada->bindValue('type', $user->getType()->name);
-
-		$sentenciaPreparada->execute();
-
-		if ($sentenciaPreparada->rowCount()>0) {
-			return true;
-		}else{
-			return false;
-		}
-	}
+    return self::isValid($sentenciaPreparada, $user);
+  }
 	public static function deleteUser(User $user):bool{
 		return true;
 	}
@@ -171,4 +147,26 @@ class UserModel{
 			return false;
 		}
 	}
+
+  /**
+   * @param false|\PDOStatement $sentenciaPreparada
+   * @param User $user
+   * @return bool
+   */
+  public static function isValid(false|\PDOStatement $sentenciaPreparada, User $user): bool
+  {
+    $sentenciaPreparada->bindValue('username', $user->getUsername());
+    $sentenciaPreparada->bindValue('password', $user->getPassword());
+    $sentenciaPreparada->bindValue('email', $user->getEmail());
+    $sentenciaPreparada->bindValue('village', $user->getVillageName());
+    $sentenciaPreparada->bindValue('type', $user->getType()->name);
+
+    $sentenciaPreparada->execute();
+
+    if ($sentenciaPreparada->rowCount() > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -1,25 +1,13 @@
 <?php
-// Ruta base URL
-const BASE_URL = "/";
 
-const DIRECTORIO_VISTAS_BACKEND = "app/Views/backend/";
-const DIRECTORIO_VISTAS_FRONTEND = "app/Views/frontend/";
-const DIRECTORIO_TEMPLATE_BACKEND = "app/Views/backend/template/";
+const DB_HOST = 'localhost';
+const DB_NAME = 'proyecto1';
+const DB_USER = 'davcerval';
+const DB_PASS = 'davcerval';
 
-const DIRECTORIO_TEMPLATE_FRONTEND = "app/Views/frontend/template/";
-
-// URLs absolutas para recursos
-const DIRECTORIO_JS_BACKEND = BASE_URL . DIRECTORIO_TEMPLATE_BACKEND . "dist/js/";
-const DIRECTORIO_CSS_BACKEND = BASE_URL . DIRECTORIO_TEMPLATE_BACKEND . "dist/css/";
-const DIRECTORIO_IMG_BACKEND = BASE_URL . DIRECTORIO_TEMPLATE_BACKEND . "imgs/";
-
-const DIRECTORIO_JS_FRONTEND = BASE_URL . DIRECTORIO_TEMPLATE_FRONTEND . "dist/js/";
-
-const DIRECTORIO_CSS_FRONTEND = BASE_URL . DIRECTORIO_TEMPLATE_FRONTEND . "dist/css/";
-const DIRECTORIO_IMG_FRONTEND = BASE_URL . DIRECTORIO_TEMPLATE_FRONTEND . "imgs/";
-
-const DB_SERVER="mariadb";
-const DB_NAME='proyecto1';
-const DB_USERNAME = "davcerval";
-const DB_PASSWORD = "davcerval";
-const DB_PORT = 3306;
+const DIR_BACKEND_VIEWS = 'app/Views/backend/';
+const DIR_BACKEND_TEMPLATE = 'app/Views/backend/template/';
+const DIR_BACKEND_CSS = '/app/Views/backend/template/css/';
+const DIR_BACKEND_JS = '/app/Views/backend/template/js/';
+const DIR_USER_BACK_VIEWS = '/app/Views/backend/User/';
+const DIR_VILLAGE_BACK_VIEWS = '/app/Views/backend/Village/';

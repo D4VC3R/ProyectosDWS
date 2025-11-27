@@ -46,5 +46,5 @@ try {
 	$response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
 }catch (Exception\HttpRouteNotFoundException $e){
-	return include_once DIR_BACKEND_VIEWS."404.php";
+	return include_once DIR_VIEWS."404.php";
 }

@@ -17,7 +17,8 @@ class UserController implements ControllerInterface
 
   function show($id)
   {
-    // Crear getUserById en UserModel y mostrarlo en userDetails
+    $usuario = UserModel::getUserByUuid($id);
+		include_once DIR_USER_BACK_VIEWS . 'userDetails.php';
   }
 
   function create()
@@ -29,6 +30,7 @@ class UserController implements ControllerInterface
   {
     $user = User::createFromArray($_POST);
     UserModel::saveUser($user);
+		header("Location: /user");
   }
 
   function edit($id)
@@ -43,7 +45,10 @@ class UserController implements ControllerInterface
 
   function delete($id)
   {
-    // Crear deleteUserById en UserModel
+    if (UserModel::deleteUserByUuid($id)){
+			header('Location: /user');
+
+		}
   }
 
   function showLogin() {

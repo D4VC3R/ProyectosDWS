@@ -18,9 +18,9 @@ include_once DIR_BACKEND_TEMPLATE . "main.php";
     <input type="password" name="password" id="createPswd" class="formPswd">
     <label for="createType">Tipo de usuario: </label>
     <select id="createType" name="type">
-      <option value="normal" selected>Normal</option>
-      <option value="premium">Premium</option>
-      <option value="admin">Administrador</option>
+      <option value="NORMAL" selected>Normal</option>
+      <option value="PREMIUM">Premium</option>
+      <option value="ADMIN">Administrador</option>
     </select>
   </fieldset>
   <button type="submit" class="formBtn">Crear</button>

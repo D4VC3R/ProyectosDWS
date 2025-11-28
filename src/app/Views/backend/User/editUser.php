@@ -7,7 +7,7 @@ include_once DIR_BACKEND_TEMPLATE . "main.php";
 ?>
 
 
-
+<?="hola"?>
 
 
 

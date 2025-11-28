@@ -20,12 +20,12 @@ $router->get('/login', [UserController::class, 'showLogin']);
 $router->post('/user/login', [UserController::class, 'verify']);
 $router->get('/user/create', [UserController::class, 'create']);
 $router->post('/user', [UserController::class, 'store']);
-$router->get('/user/${id}/edit', [UserController::class, 'edit']);
-$router->put('/user/${id}', [UserController::class,'update']);
+$router->get('/user/{id}/edit', [UserController::class, 'edit']);
+$router->put('/user/{id}', [UserController::class,'update']);
 $router->get('/user', [UserController::class, 'index']);
-$router->get('user/{$id}', [UserController::class, 'show']);
-$router->delete('/user',[UserController::class,'delete']);
-$router->get('/user/logout',[UserController::class, 'logout']);
+$router->get('user/{id}', [UserController::class, 'show']);
+$router->delete('/user/{id}',[UserController::class,'delete']);
+
 
 
 

@@ -8,10 +8,11 @@ include_once DIR_BACKEND_TEMPLATE . "main.php";
 ?>
 
   <div class="userPreviewContainer">
+      <a href="user/create">Añadir usuario</a>
     <div class="userPreview">
 
       <?php
-
+if (!$usuarios==null){
 foreach ($usuarios as $usuario){
   ?>
       <div class="userCard">
@@ -23,6 +24,7 @@ foreach ($usuarios as $usuario){
       </div>
 
     <?php
+}
 }
 ?>
     </div>

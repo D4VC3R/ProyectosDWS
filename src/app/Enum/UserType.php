@@ -10,10 +10,10 @@ enum UserType
 
   public static function stringToUserType(string $type):UserType{
     return match ($type){
-      "admin"=>UserType::ADMIN,
-      "normal"=>UserType::NORMAL,
-      "premium"=>UserType::PREMIUM,
-      "defaul"=>UserType::NORMAL
+      "ADMIN"=>UserType::ADMIN,
+      "NORMAL"=>UserType::NORMAL,
+      "PREMIUM"=>UserType::PREMIUM,
+      default=>UserType::NORMAL
     };
   }
 }

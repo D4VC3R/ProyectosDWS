@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Class\User\User;
 use App\Interface\ControllerInterface;
+use App\Model\UserModel;
 
 class UserController implements ControllerInterface
 {
 
   function index()
   {
-    // Crear getAllUsers en UserModel y mostrarlos en showUsers
+    $usuarios = UserModel::getAllUsers();
+    include_once DIR_USER_BACK_VIEWS . 'showUsers.php';
   }
 
   function show($id)
@@ -24,7 +27,8 @@ class UserController implements ControllerInterface
 
   function store()
   {
-    // Crear createUserFrom array en User e insertUser en UserModel.
+    $user = User::createFromArray($_POST);
+    UserModel::saveUser($user);
   }
 
   function edit($id)

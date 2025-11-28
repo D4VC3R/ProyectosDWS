@@ -21,16 +21,14 @@ class User implements \JsonSerializable
    * @param string $username
    * @param string $email
    * @param string $password
-   * @param DateTime $birthday
    * @param UserType $type
    */
-  public function __construct(UuidInterface $uuid, string $username, string $email, string $password, DateTime $birthday,  UserType $type)
+  public function __construct(UuidInterface $uuid, string $username, string $email, string $password, UserType $type)
   {
     $this->uuid = $uuid;
     $this->username = $username;
     $this->email = $email;
     $this->password = $password;
-    $this->birthday = $birthday;
     $this->type = $type;
   }
 
@@ -139,7 +137,6 @@ class User implements \JsonSerializable
         $userData['username'],
         $userData['email'],
         $userData['password'],
-        DateTime::createFromFormat($userData['birthday'],'%d/%c/%Y'),
         UserType::stringToUserType($userData['type'])
     );
   }

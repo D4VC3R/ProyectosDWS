@@ -16,10 +16,8 @@ include_once DIR_BACKEND_TEMPLATE . "main.php";
     <input type="email" name="email" id="createEmail" class="formEmail">
     <label for="createPswd">Contraseña: </label>
     <input type="password" name="password" id="createPswd" class="formPswd">
-    <label for="createBirth">Cumpleaños: </label>
-    <input type="datetime-local" name="birthday" id="createBirth" class="formBirth">
     <label for="createType">Tipo de usuario: </label>
-    <select id="createType">
+    <select id="createType" name="type">
       <option value="normal" selected>Normal</option>
       <option value="premium">Premium</option>
       <option value="admin">Administrador</option>

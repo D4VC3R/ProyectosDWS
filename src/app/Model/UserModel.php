@@ -12,7 +12,7 @@ class UserModel
   public static function getAllUsers():?array {
 
     try {
-      $conexion = new PDO("mysql:host=".DB_HOST."dbname=".DB_NAME,DB_USER,DB_PASS, DB_PORT);
+      $conexion = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASS);
       $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $sql = "SELECT * FROM test_user";
@@ -24,8 +24,9 @@ class UserModel
 
       if ($resultado){
         $usuarios = [];
+
         foreach ($resultado as $user){
-          User::createFromArray($user);
+          $usuarios[] = User::createFromArray($user);
         }
         return $usuarios;
       }
@@ -37,4 +38,28 @@ class UserModel
 
   }
 
+  public static function saveUser(User $user):bool{
+
+    try {
+      $conexion = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASS);
+      $conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+
+    }catch (PDOException $e){
+      var_dump($e);
+      return false;
+    }
+    $sql="INSERT INTO test_user (uuid, username, email, password, type) VALUES (:uuid, :username, :email, :password, :type)";
+
+    $stmt = $conexion->prepare($sql);
+
+    $stmt->bindValue("uuid", $user->getUuid());
+    $stmt->bindValue("username", $user->getUsername());
+    $stmt->bindValue("email", $user->getEmail());
+    $stmt->bindValue("password", $user->getPassword());
+    $stmt->bindValue("type", $user->getType()->name);
+
+    $stmt->execute();
+    return true;
+
+  }
 }

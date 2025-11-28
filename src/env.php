@@ -1,6 +1,6 @@
 <?php
 
-const DB_HOST = 'localhost';
+const DB_HOST = 'mariadb';
 const DB_NAME = 'proyecto1';
 const DB_USER = 'davcerval';
 const DB_PASS = 'davcerval';

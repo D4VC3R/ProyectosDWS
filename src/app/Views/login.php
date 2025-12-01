@@ -16,6 +16,7 @@ include_once DIR_BACKEND_TEMPLATE . "head.php";
       </fieldset>
       <button type="submit" class="formBtn">Iniciar Sesión</button>
     </form>
+      <p> <?php if($error!=null) print_r($error) ; ?> </p>
   </div>
 
 

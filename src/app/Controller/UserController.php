@@ -102,16 +102,38 @@ class UserController implements ControllerInterface
   }
 
   function showLogin() {
+    $error = null;
     return include_once DIR_VIEWS . 'login.php';
   }
 
   function verify() {
     // Hacer getUserByUsername en UserModel y comprobar contraseña hasheada.
     // Si es admin entra al backend.
+    $usuario = UserModel::getUserByUsername($_POST['username']);
+
+    if (!$usuario){
+      $error = "Nombre de usuario incorrecto.";
+      return include_once DIR_VIEWS."login.php";
+    }
+
+    if (password_verify($_POST['password'],$usuario->getPassword())){
+      $_SESSION['user']=$usuario;
+
+      if ($usuario->isAdmin()){
+        header('Location: /admin');
+      } else {
+        header('Location: /');
+      }
+    } else {
+      $error = "Fallo de autentificación.";
+      include_once DIR_VIEWS."login.php";
+    }
   }
+
   function logout()
 	{
-    return header('Location: /');
+    session_destroy();
+    header('Location: /');
   }
 
 }

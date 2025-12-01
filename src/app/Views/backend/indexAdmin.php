@@ -7,7 +7,7 @@ include_once DIR_BACKEND_TEMPLATE . "aside.php";
 include_once DIR_BACKEND_TEMPLATE . "main.php";
 ?>
 
-  <p>Bienvenido, inserteaquivariableconusername</p>
+  <p>Bienvenido, <?= $_SESSION["user"]->getUsername(); ?> </p>
 
 
 

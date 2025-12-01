@@ -61,6 +61,30 @@ class UserModel
 		}
 	}
 
+  public static function getUserByUsername(string $username):?User{
+    try {
+      $conexion = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASS);
+      $conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e){
+      return null;
+    }
+
+    $sql = "SELECT * FROM test_user WHERE username=?";
+
+    $stmt = $conexion->prepare($sql);
+    $stmt->bindValue(1,$username,PDO::PARAM_STR);
+
+    $stmt->execute();
+
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($usuario){
+      return User::createFromArray($usuario);
+    } else {
+      return null;
+    }
+  }
+
   public static function saveUser(User $user):bool{
 
     try {

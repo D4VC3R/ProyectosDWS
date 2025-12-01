@@ -2,6 +2,7 @@
 
 namespace App\Class\User;
 use App\Enum\UserType;
+use App\Model\UserModel;
 use DateTime;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -140,4 +141,15 @@ class User implements \JsonSerializable
         UserType::stringToUserType($userData['type'])
     );
   }
+
+	public static function editFromArray(array $userData):?User{
+		$usuarioAntiguo = UserModel::getUserByUuid($userData['uuid']);
+
+		$usuarioAntiguo->setUsername($userData['username']??$usuarioAntiguo->getUsername());
+		$usuarioAntiguo->setEmail($userData['email']??$usuarioAntiguo->getEmail());
+		$usuarioAntiguo->setPassword(password_hash($userData['password'],PASSWORD_DEFAULT))??$usuarioAntiguo->getPassword();
+		$usuarioAntiguo->setType(UserType::stringToUserType($userData['type'])??$usuarioAntiguo->getType()->name);
+
+		return $usuarioAntiguo;
+	}
 }

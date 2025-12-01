@@ -106,16 +106,32 @@ class UserModel
 		}
 	}
 
-	public static function update(array $userData):bool{
+	public static function updateUser(User $user):bool{
 
 		try {
-			$conexion = new PDO("mysql:host=".DB_HOST.":dbname=".DB_NAME,DB_USER,DB_HOST);
+			$conexion = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASS);
 			$conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 		}catch (PDOException){
 			return false;
 		}
 
-		$sql =
+		$sql = "UPDATE test_user SET username=:username, email=:email, password=:password, type=:type WHERE uuid=:uuid";
+
+		$stmt = $conexion->prepare($sql);
+
+		$stmt->bindValue("uuid", $user->getUuid());
+		$stmt->bindValue("username", $user->getUsername());
+		$stmt->bindValue("email", $user->getEmail());
+		$stmt->bindValue("password", $user->getPassword());
+		$stmt->bindValue("type", $user->getType()->name);
+
+		$stmt->execute();
+
+		if ($stmt->rowCount()>0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 

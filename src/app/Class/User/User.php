@@ -13,7 +13,7 @@ class User implements \JsonSerializable
   private string $username;
   private string $email;
   private string $password;
-  private DateTime $birthday;
+  private DateTime | null $birthday;
   private array $friends;
   private UserType $type;
 
@@ -31,6 +31,7 @@ class User implements \JsonSerializable
     $this->email = $email;
     $this->password = $password;
     $this->type = $type;
+		$this->birthday = null;
   }
 
 
@@ -149,6 +150,7 @@ class User implements \JsonSerializable
 		$usuarioAntiguo->setEmail($userData['email']??$usuarioAntiguo->getEmail());
 		$usuarioAntiguo->setPassword(password_hash($userData['password'],PASSWORD_DEFAULT))??$usuarioAntiguo->getPassword();
 		$usuarioAntiguo->setType(UserType::stringToUserType($userData['type'])??$usuarioAntiguo->getType()->name);
+		$usuarioAntiguo->setBirthday($userData['birthday']??$usuarioAntiguo->getBirthday());
 
 		return $usuarioAntiguo;
 	}

@@ -150,6 +150,7 @@ class UserModel
 		$stmt->bindValue("type", $user->getType()->name);
 		$stmt->bindValue("birthday",$user->getBirthday());
 
+
 		$stmt->execute();
 
 		if ($stmt->rowCount()>0){

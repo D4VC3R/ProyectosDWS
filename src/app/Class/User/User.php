@@ -134,13 +134,17 @@ class User implements \JsonSerializable
       $userData['uuid'] = Uuid::uuid4()->toString();
       $userData['password'] = password_hash($userData['password'],PASSWORD_DEFAULT);
     }
-    return new User(
+    $usuario = new User(
         Uuid::fromString($userData['uuid']),
         $userData['username'],
         $userData['email'],
         $userData['password'],
         UserType::stringToUserType($userData['type'])
     );
+		if ($userData['birthday']){
+			$usuario->setBirthday(DateTime::createFromFormat('d-m-Y', $userData['birthday']));
+		}
+		return $usuario;
   }
 
 	public static function editFromArray(array $userData):?User{

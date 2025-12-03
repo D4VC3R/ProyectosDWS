@@ -139,7 +139,7 @@ class UserModel
 			return false;
 		}
 
-		$sql = "UPDATE test_user SET username=:username, email=:email, password=:password, type=:type, birthday=:birthday WHERE uuid=:uuid";
+		$sql = "UPDATE test_user SET username=:username, email=:email, password=:password, type=:type, birthday=STR_TO_DATE(:birthday, '%d-%c-%Y') WHERE uuid=:uuid";
 
 		$stmt = $conexion->prepare($sql);
 
@@ -148,7 +148,7 @@ class UserModel
 		$stmt->bindValue("email", $user->getEmail());
 		$stmt->bindValue("password", $user->getPassword());
 		$stmt->bindValue("type", $user->getType()->name);
-		$stmt->bindValue("birthday",$user->getBirthday());
+		$stmt->bindValue("birthday",$user->getBirthday()->format('d-m-Y'));
 
 
 		$stmt->execute();

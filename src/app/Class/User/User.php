@@ -31,7 +31,6 @@ class User implements \JsonSerializable
     $this->email = $email;
     $this->password = $password;
     $this->type = $type;
-		$this->birthday = null;
   }
 
 

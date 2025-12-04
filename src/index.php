@@ -31,10 +31,10 @@ $router->post('/user/login', [UserController::class, 'verify']);
 $router->get('/user/create', [UserController::class, 'create']);
 $router->post('/user', [UserController::class, 'store']);
 $router->get('/user/{id}/edit', [UserController::class, 'edit'],['before' => 'auth']);
-$router->put('/user/{id}', [UserController::class,'update'],['before' => 'admin']);
+$router->put('/user/{id}', [UserController::class,'update']);
 $router->get('/user', [UserController::class, 'index'],['before' => 'admin']);
 $router->get('user/{id}', [UserController::class, 'show'],['before' => 'auth']);
-$router->delete('/user/{id}',[UserController::class,'delete'],['before' => 'admin']);
+$router->delete('/user/{id}',[UserController::class,'delete']);
 $router->get('/logout',[UserController::class, 'logout'],['before' => 'auth']);
 
 

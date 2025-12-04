@@ -95,7 +95,7 @@ class UserModel
       return false;
     }
 
-    $sql="INSERT INTO test_user (uuid, username, email, password, type) VALUES (:uuid, :username, :email, :password, :type)";
+    $sql="INSERT INTO test_user (uuid, username, email, password, type, birthday) VALUES (:uuid, :username, :email, :password, :type, STR_TO_DATE(:birthday, '%d/%m/%Y'))";
 
     $stmt = $conexion->prepare($sql);
 
@@ -104,6 +104,7 @@ class UserModel
     $stmt->bindValue("email", $user->getEmail());
     $stmt->bindValue("password", $user->getPassword());
     $stmt->bindValue("type", $user->getType()->name);
+		$stmt->bindValue("birthday", $user->getBirthday()->format('d/m/Y'));
 
     $stmt->execute();
     return true;
@@ -143,7 +144,7 @@ class UserModel
 
 		$stmt = $conexion->prepare($sql);
 
-		$stmt->bindValue("uuid", $user->getUuid());
+		$stmt->bindValue("uuid", $user->getUuid()->toString());
 		$stmt->bindValue("username", $user->getUsername());
 		$stmt->bindValue("email", $user->getEmail());
 		$stmt->bindValue("password", $user->getPassword());

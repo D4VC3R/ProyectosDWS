@@ -24,6 +24,9 @@ foreach ($usuarios as $usuario){
       </div>
 
     <?php
+    if (isset($mensaje)){
+       echo $mensaje;
+    }
 }
 }
 ?>

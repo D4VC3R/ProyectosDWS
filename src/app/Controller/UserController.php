@@ -31,12 +31,15 @@ class UserController implements ControllerInterface
     $user = User::createFromArray($_POST);
 
     if(UserModel::saveUser($user)){
-			http_response_code(200);
+			/*http_response_code(200);
 			return json_encode([
 				"error" => false,
 				"message" => "Usuario creado con éxito.",
-				"code" => 200
-			]);
+				"code" => 200*/
+	    $mensaje = "Usuario creado con éxito";
+	    $usuarios = UserModel::getAllUsers();
+			include_once DIR_USER_BACK_VIEWS . 'showUsers.php';
+
 		} else {
 			http_response_code(401);
 			return json_encode([
@@ -59,8 +62,9 @@ class UserController implements ControllerInterface
     // Crear update en UserModel y editFromArray en User
 		$editData = json_decode(file_get_contents("php://input"), true);
 		$editData['uuid']=$id;
+		$usuarioAntiguo = UserModel::getUserByUuid($id);
 
-		$editedUser = User::editFromArray($editData);
+		$editedUser = User::editFromArray($editData, $usuarioAntiguo);
 
 		if (UserModel::updateUser($editedUser)){
 			http_response_code(200);

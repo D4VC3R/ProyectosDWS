@@ -12,21 +12,10 @@ include_once DIR_BACKEND_TEMPLATE . "main.php";
 		<h5>Nombre de usuario: <?=$usuario->getUsername()?></h5>
 		<p>Email: <?=$usuario->getEmail()?></p>
 		<p>Tipo de usuario: <?=$usuario->getType()->name?></p>
+        <p>Cumpleaños: <?php if($usuario->getBirthday() !== null){echo $usuario->getBirthday()->format('d/m/Y');}else{echo "Sin datos.";}?></p>
 		<button onclick="">Editar</button>
 		<button onclick="">Borrar</button>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

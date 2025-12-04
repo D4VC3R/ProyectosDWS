@@ -13,7 +13,7 @@ class User implements \JsonSerializable
   private string $username;
   private string $email;
   private string $password;
-  private DateTime | null $birthday;
+  private DateTime $birthday;
   private array $friends;
   private UserType $type;
 
@@ -81,7 +81,7 @@ class User implements \JsonSerializable
 
   public function getBirthday(): DateTime
   {
-    return $this->birthday;
+		return $this->birthday;
   }
 
   public function setBirthday(DateTime $birthday): User
@@ -140,20 +140,28 @@ class User implements \JsonSerializable
         $userData['password'],
         UserType::stringToUserType($userData['type'])
     );
-		if ($userData['birthday']){
-			$usuario->setBirthday(DateTime::createFromFormat('d-m-Y', $userData['birthday']));
+		if (isset($userData['birthday'])){
+			$usuario->setBirthday(DateTime::createFromFormat('Y-m-d', $userData['birthday']));
 		}
 		return $usuario;
   }
 
-	public static function editFromArray(array $userData):?User{
-		$usuarioAntiguo = UserModel::getUserByUuid($userData['uuid']);
+	public static function editFromArray(array $userData, User $usuarioAntiguo):?User
+	{
+		$usuarioAntiguo->setUsername($userData['username'] ?? $usuarioAntiguo->getUsername());
+		$usuarioAntiguo->setEmail($userData['email'] ?? $usuarioAntiguo->getEmail());
 
-		$usuarioAntiguo->setUsername($userData['username']??$usuarioAntiguo->getUsername());
-		$usuarioAntiguo->setEmail($userData['email']??$usuarioAntiguo->getEmail());
-		$usuarioAntiguo->setPassword(password_hash($userData['password'],PASSWORD_DEFAULT))??$usuarioAntiguo->getPassword();
-		$usuarioAntiguo->setType(UserType::stringToUserType($userData['type'])??$usuarioAntiguo->getType()->name);
-		$usuarioAntiguo->setBirthday($userData['birthday']??$usuarioAntiguo->getBirthday());
+		if (isset($userData['password'])) {
+			$usuarioAntiguo->setPassword(password_hash($userData['password'], PASSWORD_DEFAULT));
+		}
+
+		if (isset($userData['type'])) {
+			$usuarioAntiguo->setType(UserType::stringToUserType($userData['type']));
+		}
+
+		if (isset($userData['birthday']) && DateTime::createFromFormat('Y-m-d', $userData['birthday'])) {
+			$usuarioAntiguo->setBirthday(DateTime::createFromFormat('Y-m-d', $userData['birthday']));
+		}
 
 		return $usuarioAntiguo;
 	}
